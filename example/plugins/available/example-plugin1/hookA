@@ -1,0 +1,2 @@
+#!/bin/bash
+echo "${CONFIG_GREETING:-"Hi,"} $@."

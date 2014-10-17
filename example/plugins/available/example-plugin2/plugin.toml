@@ -1,0 +1,16 @@
+[plugin]
+name = "example-plugin2"
+description = "An example plugin [2] for Pugn demo"
+version = "1.0"
+maintainer_name = "Jeff Lindsay"
+maintainer_email = "progrium@gmail.com"
+website_url = "http://github.com/progrium/pugn"
+implements = [
+	"hookA",
+	"hookC"
+]
+
+[plugin.config]
+excited = "String of exlamations to use in greeting"
+
+[plugin.compatibility]
