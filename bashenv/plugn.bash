@@ -41,12 +41,14 @@ trigger() {
 enable() {
 	declare desc="Enable a plugin"
 	declare plugin="$1"
-	ln -s "$PLUGIN_PATH/available/$plugin" "$PLUGIN_PATH/enabled/$plugin"
+	mkdir -p "$PLUGIN_PATH/enabled"
+	ln -fs "$PLUGIN_PATH/available/$plugin" "$PLUGIN_PATH/enabled/$plugin"
 }
 
 disable() {
 	declare desc="Disable a plugin"
 	declare plugin="$1"
+	mkdir -p "$PLUGIN_PATH/enabled"
 	rm "$PLUGIN_PATH/enabled/$plugin"
 }
 
@@ -74,7 +76,7 @@ init() {
 	touch "$PLUGIN_PATH/config.toml"
 	mkdir "$PLUGIN_PATH/enabled"
 	mkdir "$PLUGIN_PATH/available"
-	echo "Initialized empty Pugn plugin path in $PLUGIN_PATH"
+	echo "Initialized empty Plugn plugin path in $PLUGIN_PATH"
 }
 
 

@@ -1,12 +1,12 @@
-# pugn
+# plugn
 
-Hook system that lets your users extend your application with plugins
+Hook system that lets users extend your application with plugins
 
 # Try it
 
-	$ go get github.com/jteeuwen/go-bindata/...
+	$ go get -u github.com/jteeuwen/go-bindata/...
 	$ make
-	$ ./pugn
+	$ ./plugn
 	$ example/demo
 
 ## License

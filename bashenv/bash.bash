@@ -1,5 +1,5 @@
 
-if [[ "$(echo $BASH_VERSION | cut -d. -f 1)" -lt "4" ]]; then
+if [[ "$BASH_VERSINFO" -lt "4" ]]; then
 	echo "!! Your system Bash is out of date: $BASH_VERSION"
 	echo "!! Please upgrade to Bash 4 or greater."
 	if [[ "$(uname)" == "Darwin" ]]; then
