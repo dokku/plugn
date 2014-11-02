@@ -87,7 +87,7 @@ func main() {
 		f.Write(data)
 		f.Close()
 		bash.Source(f.Name())
-		defer os.Remove(f.Name())
+		//defer os.Remove(f.Name())
 	}
 	status, err := bash.Run("main", os.Args[1:])
 	assert(err)
