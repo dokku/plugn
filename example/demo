@@ -4,10 +4,10 @@ main() {
 	echo "This demo application is extensible with plugins."
 	echo
 	echo "Here are the plugins currently available:"
-	./pugn list
+	./plugn list
 	echo
 	echo "You can enable plugins with:"
-	echo '  $ pugn enable <plugin>'
+	echo '  $ plugn enable <plugin>'
 	echo
 	echo "Now, on to the demo. What is your name?"
 	read name
@@ -15,7 +15,7 @@ main() {
 	echo "Okay, I'm going to greet you, but by using the plugins."
 	echo "I'm doing this by triggering a hookA script in each plugin."
 	echo
-	./pugn trigger hookA $name
+	./plugn trigger hookA $name
 }
 
 main "$@"
