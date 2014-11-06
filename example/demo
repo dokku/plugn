@@ -9,6 +9,8 @@ main() {
 	echo "You can enable plugins with:"
 	echo '  $ plugn enable <plugin>'
 	echo
+	./plugn enable example-plugin1 example-plugin2
+	echo
 	echo "Now, on to the demo. What is your name?"
 	read name
 	echo
