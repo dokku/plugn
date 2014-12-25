@@ -11,6 +11,8 @@ import (
 	"github.com/progrium/go-basher"
 )
 
+var Version string
+
 func assert(err error) {
 	if err != nil {
 		log.Fatal(err)
@@ -68,28 +70,15 @@ func TomlSet(args []string) int {
 }
 
 func main() {
-	bash := basher.NewContext()
-	bash.ExportFunc("toml-get", TomlGet)
-	bash.ExportFunc("toml-set", TomlSet)
-	bash.ExportFunc("toml-export", TomlExport)
-	bash.HandleFuncs(os.Args)
-
-	if os.Getenv("DEV") == "1" {
-		bash.Source("./bashenv/bash.bash")
-		bash.Source("./bashenv/fn.bash")
-		bash.Source("./bashenv/cmd.bash")
-		bash.Source("./bashenv/plugn.bash")
-	} else {
-		f, err := ioutil.TempFile("", "plugn-bashenv")
-		assert(err)
-		data, err := bashenv()
-		assert(err)
-		f.Write(data)
-		f.Close()
-		bash.Source(f.Name())
-		//defer os.Remove(f.Name())
-	}
-	status, err := bash.Run("main", os.Args[1:])
-	assert(err)
-	os.Exit(status)
+	os.Setenv("VERSION", Version)
+	basher.Application(map[string]func([]string) int{
+		"toml-get":    TomlGet,
+		"toml-set":    TomlSet,
+		"toml-export": TomlExport,
+	}, []string{
+		"bashenv/bash.bash",
+		"bashenv/fn.bash",
+		"bashenv/cmd.bash",
+		"bashenv/plugn.bash",
+	}, Asset, true)
 }
