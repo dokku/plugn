@@ -13,11 +13,11 @@ import (
 
 func startGateway() {
 	go serveGateway()
-	outputlog, err := os.OpenFile(PluginPath+"/output.log", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0660)
+	/*outputlog, err := os.OpenFile(PluginPath+"/output.log", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0660)
 	if err != nil {
 		log.Fatal(err)
-	}
-	coproc.StartCoprocs(findPlugins(), outputlog)
+	}*/
+	coproc.StartCoprocs(findPlugins(), os.Stdout, "plugn")
 }
 
 func findPlugins() []string {
@@ -63,14 +63,14 @@ func serveGateway() {
 }
 
 func TriggerGateway(args []string) int {
-	gatewaySock := "unix://" + PluginPath + "/gateway.sock"
+	gatewaySock := PluginPath + "/gateway.sock"
 	if _, err := os.Stat(gatewaySock); os.IsNotExist(err) {
 		return 0
 	}
 	trigger := duplex.NewPeer()
 	defer trigger.Shutdown()
 	trigger.SetOption(duplex.OptName, "plugn:trigger")
-	err := trigger.Connect(gatewaySock)
+	err := trigger.Connect("unix://" + gatewaySock)
 	if err != nil {
 		panic(err)
 	}

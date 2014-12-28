@@ -45,7 +45,6 @@ func (of *OutletFactory) LineReader(wg *sync.WaitGroup, name string, index int, 
 	}
 }
 
-// Write out a single coloured line
 func (of *OutletFactory) WriteLine(left, right string, isError bool) {
 	of.Lock()
 	defer of.Unlock()

@@ -2,9 +2,11 @@ package main
 
 import (
 	"fmt"
-	"github.com/progrium/duplex/poc2/duplex"
 	"io"
 	"os"
+	"strings"
+
+	"github.com/progrium/duplex/poc2/duplex"
 )
 
 func main() {
@@ -18,8 +20,9 @@ func main() {
 	fmt.Println("starting...")
 	for {
 		meta, ch := plugin.Accept()
-		fmt.Println(meta, ch)
-		io.WriteString(ch, "Hello world from plugin4\n")
+		fmt.Println("triggered:", meta.Service(), meta.Headers())
+		args := strings.Join(meta.Headers(), " ")
+		io.WriteString(ch, "Hello world from remote. Args: "+args+"\n")
 		ch.Close()
 	}
 }

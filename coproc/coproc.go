@@ -39,6 +39,15 @@ type Coproc struct {
 	teardown, teardownNow Barrier // signal shutting down
 
 	wg sync.WaitGroup
+
+	name string
+}
+
+func (f *Coproc) log(s string) {
+	f.outletFactory.WriteLine(f.name, s, false)
+	if f.outletFactory.Output != os.Stdout {
+		log.Println(f.name + ": " + s)
+	}
 }
 
 func (f *Coproc) monitorInterrupt() {
@@ -50,7 +59,7 @@ func (f *Coproc) monitorInterrupt() {
 	for sig := range handler {
 		switch sig {
 		case os.Interrupt:
-			log.Println("plugn: ctrl-c detected")
+			f.log("ctrl-c detected")
 
 			f.teardown.Fall()
 			if !first {
@@ -84,14 +93,14 @@ func (f *Coproc) startProcess(idx int, procPath string, env []string, of *Outlet
 	go of.LineReader(pipeWait, procName, idx, stdout, false)
 	go of.LineReader(pipeWait, procName, idx, stderr, true)
 
-	log.Println(fmt.Sprintf("plugn: starting %s", procName))
+	f.log(fmt.Sprintf("starting %s", procName))
 
 	finished := make(chan struct{}) // closed on process exit
 
 	err = ps.Start()
 	if err != nil {
 		f.teardown.Fall()
-		log.Println(fmt.Sprint("plugn: failed to start ", procName, ": ", err))
+		f.log(fmt.Sprint("failed to start ", procName, ": ", err))
 		return
 	}
 
@@ -113,19 +122,21 @@ func (f *Coproc) startProcess(idx int, procPath string, env []string, of *Outlet
 
 		select {
 		case <-finished:
+			time.Sleep(1 * time.Second) // for now, just in case loop
+			f.log(fmt.Sprintf("restarting %s", procName))
 			f.startProcess(idx, procPath, env, of)
 			return
 
 		case <-f.teardown.Barrier():
 			// tearing down
 
-			log.Println(fmt.Sprintf("plugn: sending SIGTERM to %s", procName))
+			f.log(fmt.Sprintf("sending SIGTERM to %s", procName))
 			sendSignal(ps.Process.Pid, syscall.SIGTERM)
 
 			// Give the process a chance to exit, otherwise kill it.
 			select {
 			case <-f.teardownNow.Barrier():
-				log.Println(fmt.Sprintf("plugn: killing %s", procName))
+				f.log(fmt.Sprintf("killing %s", procName))
 				sendSignal(ps.Process.Pid, syscall.SIGKILL)
 			case <-finished:
 			}
@@ -133,13 +144,18 @@ func (f *Coproc) startProcess(idx int, procPath string, env []string, of *Outlet
 	}()
 }
 
-func StartCoprocs(procs []string, output io.Writer) {
+func StartCoprocs(procs []string, output io.Writer, name string) {
 	of := NewOutletFactory()
 	of.Padding = longestBase(procs)
 	of.Output = output
 
 	f := &Coproc{
 		outletFactory: of,
+		name:          name,
+	}
+
+	if len(procs) == 0 {
+		f.log("no processes to run")
 	}
 
 	go f.monitorInterrupt()
@@ -148,7 +164,7 @@ func StartCoprocs(procs []string, output io.Writer) {
 	f.teardown.FallHook = func() {
 		go func() {
 			time.Sleep(shutdownGraceTime)
-			log.Println("plugn: grace time expired")
+			f.log("grace time expired")
 			f.teardownNow.Fall()
 		}()
 	}
