@@ -1,0 +1,12 @@
+#!/bin/bash
+echo "Sun Chips, French Onion:0.75"
+echo "Sun Chips, Original:0.75"
+echo "Ruffles, Cheddar & Sour Cream:0.75"
+echo "Hostess CupCakes:0.75"
+echo "Reese's:0.75"
+echo "BabyRuth:0.75"
+echo "m&m's, Peanut:0.75"
+echo "m&m's, Original:0.75"
+echo "Hershey's Bar:0.75"
+echo "Snickers:0.75"
+echo "Lunchables:1.00"

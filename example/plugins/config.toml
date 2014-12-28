@@ -1,5 +1,2 @@
-[example-plugin1]
-  greeting = "Hello there,"
-
-[example-plugin2]
-  excited = "!!"
+[passcode]
+  code = "1234"

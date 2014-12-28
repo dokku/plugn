@@ -1,0 +1,11 @@
+[plugin]
+name = "remote"
+description = "Proxy to a remote plugin via Duplex"
+version = "1.0"
+maintainer_name = "Jeff Lindsay"
+maintainer_email = "progrium@gmail.com"
+website_url = "http://github.com/progrium/plugn"
+
+[plugin.config]
+
+[plugin.compatibility]

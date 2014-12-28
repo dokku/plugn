@@ -1,0 +1,4 @@
+#!/bin/bash
+printf "Passcode: "
+read code
+[[ "$code" == "$CONFIG_CODE" ]]

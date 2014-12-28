@@ -1,0 +1,7 @@
+#!/bin/bash
+echo "====== ADVERTISEMENT ======"
+cat "$(dirname $BASH_SOURCE)/ads.txt" \
+	| perl -MList::Util -e 'print List::Util::shuffle <>' \
+	| head -1
+echo "==========================="
+echo

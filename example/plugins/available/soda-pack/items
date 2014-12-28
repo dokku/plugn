@@ -1,0 +1,8 @@
+#!/bin/bash
+echo "Pepsi:1.00"
+echo "Diet Pepsi:1.00"
+echo "Mountain Dew:1.00"
+echo "Sprite:1.00"
+echo "Coca-Cola:1.00"
+echo "Diet Coke:1.00"
+echo "Dr Pepper:1.00"

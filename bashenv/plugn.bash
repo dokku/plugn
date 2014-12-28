@@ -36,6 +36,7 @@ trigger() {
   		[[ -x "$plugin/$hook" ]] && $plugin/$hook "$@"
 	done
 	shopt -u nullglob
+	trigger-gateway $hook "$@"
 }
 
 enable() {
@@ -79,14 +80,17 @@ init() {
 	echo "Initialized empty Plugn plugin path in $PLUGIN_PATH"
 }
 
+_source() {
+	declare desc="Source commands for sourcable plugins"
+	shopt -s nullglob
+	for plugin in $PLUGIN_PATH/enabled/*; do
+  		[[ -f "$plugin/$(basename $plugin).sh" ]] && echo "source $plugin/$(basename $plugin).sh"
+	done
+	shopt -u nullglob
+}
 
 main() {
 	set -eo pipefail; [[ "$TRACE" ]] && set -x
-	export BASH_ENV=
-	if [[ ! "$PLUGIN_PATH" ]]; then
-		echo "!! PLUGIN_PATH is not set in environment"
-		exit 2
-	fi
 
 	cmd-export install
 	cmd-export uninstall
@@ -94,6 +98,7 @@ main() {
 	cmd-export trigger
 	cmd-export enable
 	cmd-export disable
+	cmd-export _source "source"
 	cmd-export-ns config "Plugin configuration"
 	cmd-export config-get
 	cmd-export config-export

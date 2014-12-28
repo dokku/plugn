@@ -1,6 +1,6 @@
 NAME=plugn
 HARDWARE=$(shell uname -m)
-VERSION=0.1.0
+VERSION=0.2.0
 
 build:
 	go-bindata bashenv

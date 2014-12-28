@@ -1,0 +1,252 @@
+#!/usr/bin/env bash
+
+if [[ "$BASH_VERSINFO" -lt "4" ]]; then
+	echo "!! Your system Bash is out of date: $BASH_VERSION"
+	echo "!! Please upgrade to Bash 4 or greater."
+	exit 2
+fi
+
+readonly credit_file="/tmp/credit"
+readonly stuck_file="/tmp/stuck"
+
+plugn() {
+	../plugn "$@"
+}
+
+items-coded() {
+	local code="10"
+	while read line; do
+		echo "$code:$line"
+		((code++))
+	done <<< "$(plugn trigger items | sort)"
+}
+
+item-name() {
+	awk -F':' '{print $2}'
+}
+
+item-price() {
+	awk -F':' '{print $3}'
+}
+
+select-item() {
+	items-coded | grep "^$1:"
+}
+
+items() {
+	declare desc="Show items available in vending machine"
+	printf " %-5s %-32s %s\n" "Code" "Item" "Price"
+	printf "%0.s-" {1..50}; printf "\n"
+	items-coded | awk -F':' '{printf "   %s  %-32s %s\n", $1, $2, $3}'
+	echo
+	echo "Credit: $(credit)"
+}
+
+_select() {
+	declare desc="Select an item from vending machine"
+	declare code="$1"
+	if [[ "$(credit)" == "0" ]]; then
+		echo "!! Please insert credit before selecting"
+		exit 2
+	fi
+	plugn trigger pre-select
+	echo "Credit: $(credit)"
+	if [[ ! "$code" ]]; then
+		printf "Select code: "
+		read code
+	fi
+	local item="$(select-item $code)"
+	if [[ ! "$item" ]]; then
+		echo "!! No item with code $code"
+		exit 2
+	fi
+	local price="$(select-item $code | item-price)"
+	local change="$(echo "$(credit) - $price" | bc)"
+	if [[ "${change:0:1}" == "-" ]]; then
+		echo "!! Not enough credit"
+		exit 2
+	fi
+	echo "Dispensing item..."
+	sleep 2
+	if [[ "$(($RANDOM % 5))" == "0" ]]; then
+		select-item $code | item-name >> $stuck_file
+		echo "!! Item got stuck"
+	else
+		echo "==== ITEM ===="
+		select-item $code | item-name
+		cat $stuck_file
+		echo "=============="
+		> $stuck_file
+	fi
+	if [[ "$change" != "0" ]]; then
+		echo "Dispensing change..."
+		sleep 1
+		echo "==== CHANGE ===="
+		echo "$change"
+		echo "================"
+	fi
+	echo "0.00" > $credit_file
+	echo "Credit: $(credit)"
+}
+
+credit() {
+	cat $credit_file | xargs printf " + %s" | sed 's/^ \+//' | bc
+}
+
+insert() {
+	declare desc="Insert dollar amount via stdin"
+	if [[ -t 0 ]]; then
+		echo "!! Please insert amount via stdin"
+		exit 2
+	fi
+	cat >> $credit_file
+	echo "Credit: $(credit)"
+}
+
+reset() {
+	declare desc="Return credit in vending machine"
+	if [[ "$(credit)" == "0" ]]; then
+		echo "!! No credit in machine"
+		exit 2
+	fi
+	echo "Dispensing change..."
+	sleep 1
+	echo "==== CHANGE ===="
+	credit
+	echo "================"
+	echo "0.00" > $credit_file
+}
+
+plugins() {
+	declare desc="Manage vending machine plugins"
+	plugn "$@"
+}
+
+main() {
+	set -eo pipefail
+	cd "$(dirname $BASH_SOURCE)"
+	if [[ ! -f $credit_file ]]; then
+		echo "0.00" > $credit_file
+	fi
+	if [[ ! -f $stuck_file ]]; then
+		touch $stuck_file
+	fi
+
+	cmd-export items
+	cmd-export _select "select"
+	cmd-export insert
+	cmd-export reset
+	cmd-export plugins
+
+	$(plugn source)
+	plugn trigger banner
+
+	cmd-ns "" "$@"	
+}
+
+# fn.bash
+
+fn-args() {
+	declare desc="Inspect a function's arguments"
+	local argline=$(type $1 | grep declare | grep -v "declare desc" | head -1)
+	echo -e "${argline// /"\n"}" | awk -F= '/=/{print "<"$1">"}' | tr "\n" " "
+}
+
+fn-desc() {
+	declare desc="Inspect a function's description"
+	desc=""
+	eval "$(type $1 | grep desc | head -1)"; echo $desc
+}
+
+fn-info() {
+	declare desc="Inspects a function"
+	declare fn="$1" showsource="$2"
+	echo "$fn $(fn-args $fn)"
+	echo "  $(fn-desc $fn)"
+	echo
+	if [[ "$showsource" ]]; then
+		type $fn | tail -n +2
+		echo
+	fi
+}
+
+# cmd.bash
+
+declare -A CMDS
+
+cmd-list() {
+	declare desc="Lists available commands"
+	declare ns="$1"
+	cmd-list-keys "$ns" | sed "s/$ns://"
+}
+
+cmd-list-keys() {
+	declare ns="$1"
+	for k in "${!CMDS[@]}"; do
+		echo "$k"
+	done | grep "^$ns:" | sort
+}
+
+cmd-list-ns() {
+	for k in "${!CMDS[@]}"; do
+		echo "$k"
+	done | grep -v : | sort
+}
+
+cmd-export() {
+	declare desc="Exports a function as a command"
+	declare fn="$1" as="${2:-$1}"
+	local ns=""
+	for n in $(cmd-list-ns); do
+		echo "$fn" | grep "^$n-" &> /dev/null && ns="$n"
+	done
+	CMDS["$ns:${as/#$ns-/}"]="$fn"
+}
+
+cmd-export-ns() {
+	declare ns="$1" desc="$2"
+	eval "$1() { 
+		declare desc=\"$desc\"
+		cmd-ns $1 \"\$@\"; 
+	}"
+	cmd-export "$1"
+	CMDS["$1"]="$1"
+}
+
+cmd-ns() {
+	local ns="$1"; shift 
+	local cmd="$1"; shift || true
+	local status=0
+	if cmd-list "$ns" | grep ^$cmd\$ &> /dev/null; then
+		${CMDS["$ns:$cmd"]} "$@"
+	else
+		if [[ "$cmd" ]]; then
+			echo "No such command: $cmd"
+			status=2
+		elif [[ "$ns" ]]; then
+			echo "$(fn-desc "$ns")"
+		fi
+		echo
+		echo "Available commands:"
+		for cmd in $(cmd-list "$ns"); do
+			printf "  %-28s %s\n" "$cmd" "$(fn-desc "${CMDS["$ns:$cmd"]}")"
+		done
+		echo
+		exit $status
+	fi
+}
+
+cmd-help() {
+	declare desc="Shows help information for a command"
+	declare args="$@"
+	if [[ "$args" ]]; then
+    	for cmd; do true; done # last arg
+    	local ns="${args/%$cmd/}"; ns="${ns/% /}"; ns="${ns/ /-}"
+    	local fn="${CMDS["$ns:$cmd"]}"
+    	fn-info "$fn" 1
+	else
+		cmd-ns ""
+	fi
+}
+
+main "$@"
