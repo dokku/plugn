@@ -1,10 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"io"
+	"log"
 	"os"
-	"strings"
 
 	"github.com/progrium/duplex/poc2/duplex"
 )
@@ -17,12 +16,15 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println("starting...")
+	log.Println("remote: starting...")
 	for {
 		meta, ch := plugin.Accept()
-		fmt.Println("triggered:", meta.Service(), meta.Headers())
-		args := strings.Join(meta.Headers(), " ")
-		io.WriteString(ch, "Hello world from remote. Args: "+args+"\n")
+		log.Println("remote: triggered:", meta.Service(), meta.Headers())
+		switch meta.Service() {
+		case "items":
+			io.WriteString(ch, "Fake Remote, Item 1:5.00\n")
+			io.WriteString(ch, "Fake Remote, Item 2:5.00\n")
+		}
 		ch.Close()
 	}
 }

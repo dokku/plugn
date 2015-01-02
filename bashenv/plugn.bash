@@ -44,6 +44,7 @@ enable() {
 	declare plugin="$1"
 	mkdir -p "$PLUGIN_PATH/enabled"
 	ln -fs "$PLUGIN_PATH/available/$plugin" "$PLUGIN_PATH/enabled/$plugin"
+	reload-gateway
 }
 
 disable() {
@@ -51,6 +52,7 @@ disable() {
 	declare plugin="$1"
 	mkdir -p "$PLUGIN_PATH/enabled"
 	rm "$PLUGIN_PATH/enabled/$plugin"
+	reload-gateway
 }
 
 config-get() {

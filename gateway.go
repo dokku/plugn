@@ -5,19 +5,39 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"os/signal"
 	"strings"
+	"sync"
 
-	"./coproc"
 	"github.com/progrium/duplex/poc2/duplex"
+	"github.com/progrium/plugin-demo/demo/coproc"
 )
 
-func startGateway() {
-	go serveGateway()
-	/*outputlog, err := os.OpenFile(PluginPath+"/output.log", os.O_CREATE|os.O_RDWR|os.O_APPEND, 0660)
-	if err != nil {
-		log.Fatal(err)
-	}*/
-	coproc.StartCoprocs(findPlugins(), os.Stdout, "plugn")
+func runGateway() {
+	log.Println("starting gateway...")
+	wg := new(sync.WaitGroup)
+	host := coproc.StartHost(findPlugins())
+	wg.Add(1)
+	go func() {
+		host.Wait()
+		wg.Done()
+	}()
+	gateway := startGateway(wg, host)
+	go func() {
+		handler := make(chan os.Signal, 1)
+		signal.Notify(handler, os.Interrupt)
+		first := true
+		for sig := range handler {
+			switch sig {
+			case os.Interrupt:
+				log.Println("ctrl-c detected")
+				gateway.Shutdown()
+				host.Shutdown(!first)
+				first = false
+			}
+		}
+	}()
+	wg.Wait()
 }
 
 func findPlugins() []string {
@@ -36,30 +56,44 @@ func findPlugins() []string {
 	return plugins
 }
 
-func serveGateway() {
+func startGateway(wg *sync.WaitGroup, plugins *coproc.Host) *duplex.Peer {
 	gateway := duplex.NewPeer()
-	defer gateway.Shutdown()
 	gateway.SetOption(duplex.OptName, "plugn:gateway")
 	err := gateway.Bind("unix://" + PluginPath + "/gateway.sock")
 	if err != nil {
 		panic(err)
 	}
-	for {
-		meta, ch := gateway.Accept()
-		go func() {
-			for _, peer := range gateway.Peers() {
-				if !strings.HasPrefix(peer, "plugn") {
-					hook, err := gateway.Open(peer, meta.Service(), meta.Headers())
-					if err != nil {
-						panic(err)
-					}
-					io.Copy(ch, hook)
-					hook.Close()
-				}
+	wg.Add(1)
+	go func() {
+		for {
+			meta, ch := gateway.Accept()
+			if meta == nil {
+				break
 			}
-			ch.Close()
-		}()
-	}
+			if meta.Service() == "reload" {
+				log.Println("reload received...")
+				plugins.RestartWith(findPlugins())
+				ch.Close()
+				continue
+			}
+			go func() {
+				for _, peer := range gateway.Peers() {
+					if !strings.HasPrefix(peer, "plugn") {
+						hook, err := gateway.Open(peer, meta.Service(), meta.Headers())
+						if err != nil {
+							log.Println("unable to trigger", peer)
+							continue
+						}
+						io.Copy(ch, hook)
+						hook.Close()
+					}
+				}
+				ch.Close()
+			}()
+		}
+		wg.Done()
+	}()
+	return gateway
 }
 
 func TriggerGateway(args []string) int {
@@ -80,5 +114,24 @@ func TriggerGateway(args []string) int {
 	}
 	io.Copy(os.Stdout, ch)
 	ch.Close()
+	return 0
+}
+
+func ReloadGateway(args []string) int {
+	gatewaySock := PluginPath + "/gateway.sock"
+	if _, err := os.Stat(gatewaySock); os.IsNotExist(err) {
+		return 0
+	}
+	trigger := duplex.NewPeer()
+	defer trigger.Shutdown()
+	trigger.SetOption(duplex.OptName, "plugn:reload")
+	err := trigger.Connect("unix://" + gatewaySock)
+	if err != nil {
+		panic(err)
+	}
+	_, err = trigger.Open("plugn:gateway", "reload", nil)
+	if err != nil {
+		panic(err)
+	}
 	return 0
 }

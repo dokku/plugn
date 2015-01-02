@@ -83,7 +83,7 @@ func main() {
 	}
 	PluginPath = os.Getenv("PLUGIN_PATH")
 	if len(os.Args) > 1 && os.Args[1] == "gateway" {
-		startGateway()
+		runGateway()
 		return
 	}
 	os.Setenv("VERSION", Version)
@@ -92,6 +92,7 @@ func main() {
 		"toml-set":        TomlSet,
 		"toml-export":     TomlExport,
 		"trigger-gateway": TriggerGateway,
+		"reload-gateway":  ReloadGateway,
 	}, []string{
 		"bashenv/bash.bash",
 		"bashenv/fn.bash",
