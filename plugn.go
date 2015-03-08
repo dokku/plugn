@@ -21,17 +21,16 @@ func assert(err error) {
 	}
 }
 
-func TomlGet(args []string) int {
+func TomlGet(args []string) {
 	bytes, err := ioutil.ReadAll(os.Stdin)
 	assert(err)
 	var t map[string]interface{}
 	_, err = toml.Decode(string(bytes), &t)
 	assert(err)
 	fmt.Println(t[args[0]].(map[string]interface{})[args[1]])
-	return 0
 }
 
-func TomlExport(args []string) int {
+func TomlExport(args []string) {
 	plugin := args[0]
 	bytes, err := ioutil.ReadAll(os.Stdin)
 	assert(err)
@@ -51,10 +50,9 @@ func TomlExport(args []string) int {
 		k := strings.ToUpper(strings.Replace(key, "-", "_", -1))
 		fmt.Println("export CONFIG_" + k + "=\"${" + prefix + "_" + k + ":-\"" + config[key] + "\"}\"")
 	}
-	return 0
 }
 
-func TomlSet(args []string) int {
+func TomlSet(args []string) {
 	bytes, err := ioutil.ReadAll(os.Stdin)
 	assert(err)
 	var t map[string]map[string]string
@@ -68,7 +66,6 @@ func TomlSet(args []string) int {
 	assert(err)
 	assert(toml.NewEncoder(f).Encode(t))
 	f.Close()
-	return 0
 }
 
 func main() {
@@ -87,7 +84,7 @@ func main() {
 		return
 	}
 	os.Setenv("VERSION", Version)
-	basher.Application(map[string]func([]string) int{
+	basher.Application(map[string]func([]string){
 		"toml-get":        TomlGet,
 		"toml-set":        TomlSet,
 		"toml-export":     TomlExport,

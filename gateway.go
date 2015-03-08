@@ -96,10 +96,10 @@ func startGateway(wg *sync.WaitGroup, plugins *coproc.Host) *duplex.Peer {
 	return gateway
 }
 
-func TriggerGateway(args []string) int {
+func TriggerGateway(args []string) {
 	gatewaySock := PluginPath + "/gateway.sock"
 	if _, err := os.Stat(gatewaySock); os.IsNotExist(err) {
-		return 0
+		return
 	}
 	trigger := duplex.NewPeer()
 	defer trigger.Shutdown()
@@ -114,13 +114,12 @@ func TriggerGateway(args []string) int {
 	}
 	io.Copy(os.Stdout, ch)
 	ch.Close()
-	return 0
 }
 
-func ReloadGateway(args []string) int {
+func ReloadGateway(args []string) {
 	gatewaySock := PluginPath + "/gateway.sock"
 	if _, err := os.Stat(gatewaySock); os.IsNotExist(err) {
-		return 0
+		return
 	}
 	trigger := duplex.NewPeer()
 	defer trigger.Shutdown()
@@ -133,5 +132,4 @@ func ReloadGateway(args []string) int {
 	if err != nil {
 		panic(err)
 	}
-	return 0
 }
