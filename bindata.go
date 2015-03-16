@@ -76,7 +76,7 @@ func bashenv_bash_bash() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindata_file_info{name: "bashenv/bash.bash", size: 557, mode: os.FileMode(420), modTime: time.Unix(1419752010, 0)}
+	info := bindata_file_info{name: "bashenv/bash.bash", size: 557, mode: os.FileMode(420), modTime: time.Unix(1425787452, 0)}
 	a := &asset{bytes: bytes, info:  info}
 	return a, nil
 }
@@ -96,7 +96,7 @@ func bashenv_cmd_bash() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindata_file_info{name: "bashenv/cmd.bash", size: 1479, mode: os.FileMode(420), modTime: time.Unix(1414685718, 0)}
+	info := bindata_file_info{name: "bashenv/cmd.bash", size: 1479, mode: os.FileMode(420), modTime: time.Unix(1425787452, 0)}
 	a := &asset{bytes: bytes, info:  info}
 	return a, nil
 }
@@ -116,7 +116,7 @@ func bashenv_fn_bash() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindata_file_info{name: "bashenv/fn.bash", size: 547, mode: os.FileMode(420), modTime: time.Unix(1414685718, 0)}
+	info := bindata_file_info{name: "bashenv/fn.bash", size: 547, mode: os.FileMode(420), modTime: time.Unix(1425787452, 0)}
 	a := &asset{bytes: bytes, info:  info}
 	return a, nil
 }
@@ -136,7 +136,7 @@ func bashenv_plugn_bash() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindata_file_info{name: "bashenv/plugn.bash", size: 2774, mode: os.FileMode(420), modTime: time.Unix(1420233510, 0)}
+	info := bindata_file_info{name: "bashenv/plugn.bash", size: 2774, mode: os.FileMode(420), modTime: time.Unix(1425787452, 0)}
 	a := &asset{bytes: bytes, info:  info}
 	return a, nil
 }
