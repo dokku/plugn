@@ -77,8 +77,8 @@ init() {
 	declare desc="Initialize an empty plugin path"
 	mkdir -p "$PLUGIN_PATH"
 	touch "$PLUGIN_PATH/config.toml"
-	mkdir "$PLUGIN_PATH/enabled"
-	mkdir "$PLUGIN_PATH/available"
+	mkdir -p "$PLUGIN_PATH/enabled"
+	mkdir -p "$PLUGIN_PATH/available"
 	echo "Initialized empty Plugn plugin path in $PLUGIN_PATH"
 }
 
