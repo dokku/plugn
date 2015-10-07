@@ -18,10 +18,11 @@ update() {
 	declare desc="Update plugin and optionally pin to commit/tag/branch"
 	declare plugin="$1" committish="$2"
 	[[ ! -d "$PLUGIN_PATH/available/$plugin" ]] && echo "Plugin ($plugin) not installed" && exit 1
-	[[ -f ./.plugin_committish ]] && [[ -z "$committish" ]] && echo "Plugin pinning to $(< ./.plugin_committish)" && exit 0
 	cd "$PLUGIN_PATH/available/$plugin"
+	[[ -z "$committish" ]] && [[ ! (git symbolic-ref HEAD) ]] && echo "Plugin pinned to $(< ./.plugin_committish)" && exit 0
 	git checkout master &> /dev/null
 	git pull &> /dev/null
+	git checkout - &> /dev/null
 	if [[ -n "$committish" ]]; then
 		git fetch --tags &> /dev/null
 		git checkout $committish &> /dev/null
