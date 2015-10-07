@@ -14,6 +14,25 @@ uninstall() {
 	rm -rf "$PLUGIN_PATH/available/$plugin"
 }
 
+update() {
+	declare desc="Update plugin and optionally pin to commit/tag/branch"
+	declare plugin="$1" committish="$2"
+	[[ ! -d "$PLUGIN_PATH/available/$plugin" ]] && echo "Plugin ($plugin) not installed" && exit 1
+	[[ -f ./.plugin_committish ]] && [[ -z "$committish" ]] && echo "Plugin pinning to $(< ./.plugin_committish)" && exit 0
+	cd "$PLUGIN_PATH/available/$plugin"
+	git checkout master &> /dev/null
+	git pull &> /dev/null
+	if [[ -n "$committish" ]]; then
+		git fetch --tags &> /dev/null
+		git checkout $committish &> /dev/null
+		echo "$committish" > ./.plugin_committish
+		echo "Plugin ($plugin) updated and pinned to $committish"
+	else
+		echo "Plugin ($plugin) updated"
+	fi
+	cd - > /dev/null
+}
+
 list() {
 	declare desc="List all local plugins"
 	shopt -s nullglob
@@ -106,6 +125,6 @@ main() {
 	cmd-export config-export
 	cmd-export config-set
 	cmd-export init
-	
+
 	cmd-ns "" "$@"
 }
