@@ -1,0 +1,23 @@
+machine:
+  services:
+    - docker
+
+dependencies:
+  pre:
+    - make circleci
+    - make deps
+  override:
+    - make build
+
+test:
+  override:
+    - basht:
+        parallel: true
+        files:
+          - tests/**/tests.sh
+
+deployment:
+  release:
+    branch: release
+    commands:
+      - make release
