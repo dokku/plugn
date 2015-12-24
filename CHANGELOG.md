@@ -24,6 +24,7 @@ All notable changes to this project will be documented in this file.
 - @michaelshobbs implement plugn update <repo_url> [<committish>]
 - @michaelshobbs support updating branches
 - @michaelshobbs fix typo and add test
+- @michaelshobbs add version command
 
 ### Changed
 - @progrium output all to stdout in gateway for now
