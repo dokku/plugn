@@ -19,7 +19,7 @@ update() {
 	declare plugin="$1" committish="$2"
 	[[ ! -d "$PLUGIN_PATH/available/$plugin" ]] && echo "Plugin ($plugin) not installed" && exit 1
 	cd "$PLUGIN_PATH/available/$plugin"
-	[[ -z "$committish" ]] && [[ ! (git symbolic-ref HEAD) ]] && echo "Plugin pinned to $(< ./.plugin_committish)" && exit 0
+	[[ -z "$committish" ]] && [[ ! $(git symbolic-ref HEAD) ]] && echo "Plugin pinned to $(< ./.plugin_committish)" && exit 0
 	git checkout master &> /dev/null
 	git pull &> /dev/null
 	git checkout - &> /dev/null
@@ -116,6 +116,7 @@ main() {
 
 	cmd-export install
 	cmd-export uninstall
+	cmd-export update
 	cmd-export list
 	cmd-export trigger
 	cmd-export enable
