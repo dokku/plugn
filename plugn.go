@@ -69,6 +69,7 @@ func TomlSet(args []string) {
 }
 
 func main() {
+	os.Setenv("PLUGN_VERSION", Version)
 	if data, err := ioutil.ReadFile(".plugn"); err == nil {
 		if path, err := filepath.Abs(string(data)); err == nil {
 			os.Setenv("PLUGIN_PATH", path)
@@ -83,7 +84,6 @@ func main() {
 		runGateway()
 		return
 	}
-	os.Setenv("VERSION", Version)
 	basher.Application(map[string]func([]string){
 		"toml-get":        TomlGet,
 		"toml-set":        TomlSet,
