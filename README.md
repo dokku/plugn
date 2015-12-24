@@ -23,6 +23,7 @@ Available commands:
   source                       Source commands for sourcable plugins
   trigger                      Triggers hook in enabled plugins
   uninstall                    Remove plugin from available plugins
+  update                       Update plugin and optionally pin to commit/tag/branch
 ```
 
 ## Building & Testing (in docker)

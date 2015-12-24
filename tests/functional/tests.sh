@@ -67,3 +67,14 @@ T_plugn-uninstall() {
 		plugn uninstall smoke-test-plugin && \
 		plugn list | grep smoke-test-plugin"
 }
+
+T_plugn-update() {
+	plugn-test-pass "test-update" "
+		plugn init && \
+		plugn install https://github.com/dokku/smoke-test-plugin && \
+		plugn list | grep smoke-test-plugin && \
+		plugn update smoke-test-plugin v0.2.0 && \
+		plugn list | grep smoke-test-plugin | grep 0.2.0 && \
+		plugn update smoke-test-plugin testing-branch-do-not-delete && \
+		plugn list | grep smoke-test-plugin | grep 0.3.0-testing"
+}
