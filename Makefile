@@ -24,7 +24,7 @@ release: build
 	rm -rf release && mkdir release
 	tar -zcf release/$(NAME)_$(VERSION)_linux_$(HARDWARE).tgz -C build/linux $(NAME)
 	tar -zcf release/$(NAME)_$(VERSION)_darwin_$(HARDWARE).tgz -C build/darwin $(NAME)
-	gh-release create progrium/$(NAME) $(VERSION) $(shell git rev-parse --abbrev-ref HEAD)
+	gh-release create dokku/$(NAME) $(VERSION) $(shell git rev-parse --abbrev-ref HEAD)
 
 build-in-docker:
 	docker build --rm -f Dockerfile.build -t $(NAME)-build .
