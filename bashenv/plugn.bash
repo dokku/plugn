@@ -1,4 +1,9 @@
 
+version() {
+	declare desc="Show version"
+	echo "plugn: ${PLUGN_VERSION:-dev}"
+}
+
 install() {
 	declare desc="Install a new plugin from a Git URL"
 	declare url="$1" name="$2"
@@ -114,6 +119,7 @@ _source() {
 main() {
 	set -eo pipefail; [[ "$TRACE" ]] && set -x
 
+	cmd-export version
 	cmd-export install
 	cmd-export uninstall
 	cmd-export update

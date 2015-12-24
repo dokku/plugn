@@ -78,3 +78,9 @@ T_plugn-update() {
 		plugn update smoke-test-plugin testing-branch-do-not-delete && \
 		plugn list | grep smoke-test-plugin | grep 0.3.0-testing"
 }
+
+T_plugn-version() {
+	plugn-test-pass "test-version" "
+		plugn init && \
+		plugn version"
+}
