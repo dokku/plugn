@@ -146,7 +146,7 @@ func bashenvPlugnBash() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "bashenv/plugn.bash", size: 3633, mode: os.FileMode(420), modTime: time.Unix(1450979821, 0)}
+	info := bindataFileInfo{name: "bashenv/plugn.bash", size: 3633, mode: os.FileMode(420), modTime: time.Unix(1450981185, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
