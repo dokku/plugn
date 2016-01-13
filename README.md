@@ -4,8 +4,8 @@ Hook system that lets users extend your application with plugins
 
 ## Installation
 ```
-    wget -qO /tmp/plugn_latest.tgz https://github.com/dokku/plugn/releases/download/v0.1.0/plugn_0.1.0_linux_x86_64.tgz
-    tar xzf /tmp/plugn_latest.tgz -C /usr/local/bin
+$ wget -qO /tmp/plugn_latest.tgz https://github.com/dokku/plugn/releases/download/v0.2.1/plugn_0.2.1_linux_x86_64.tgz
+$ tar xzf /tmp/plugn_latest.tgz -C /usr/local/bin
 ```
 
 ## Usage
@@ -24,6 +24,7 @@ Available commands:
   trigger                      Triggers hook in enabled plugins
   uninstall                    Remove plugin from available plugins
   update                       Update plugin and optionally pin to commit/tag/branch
+  version                      Show version
 ```
 
 ## Building & Testing (in docker)
@@ -32,6 +33,22 @@ $ docker-machine create -d virtualbox plugn-dev
 $ eval $(docker-machine env plugn-dev)
 $ make build-in-docker
 $ make test
+```
+
+## Plugin directory structure example
+```
+ps (plugin name)
+├── [-rw-r--r--]  plugin.toml (metadata)
+├── [-rwxr-xr-x]  post-deploy (trigger)
+├── [-rwxr-xr-x]  post-stop  (trigger)
+└── [-rwxr-xr-x]  pre-deploy (trigger)
+```
+
+## plugin.toml format example
+```
+[plugin name]
+description = "plugin description"
+version = "0.1.0"
 ```
 
 ## Releases
