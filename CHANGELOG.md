@@ -10,6 +10,16 @@ All notable changes to this project will be documented in this file.
 
 ### Changed
 
+## [0.2.2] - 2016-09-16
+### Fixed
+- @michaelshobbs bring back bindata.go
+- @michaelshobbs updated bindata.go
+
+### Changed
+- @michaelshobbs [ci skip] documentation update pass. closes #5
+- @michaelshobbs use docker 1.12.1
+- @michaelshobbs use dokku fork of duplex and vendor deps. closes #16
+
 ## [0.2.1] - 2015-12-24
 ### Fixed
 - @lalyos Fix missing newlines
@@ -34,11 +44,12 @@ All notable changes to this project will be documented in this file.
 
 ## [0.1.0] - 2014-11-02
 ### Fixed
-- fix newline issie
+- @progrium fix newline issie
 
 ### Changed
-- rename to plugn
+- @progrium rename to plugn
 
-[unreleased]: https://github.com/dokku/plugn/compare/v0.2.1...HEAD
+[unreleased]: https://github.com/dokku/plugn/compare/v0.2.2...HEAD
+[0.2.2]: https://github.com/dokku/plugn/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/dokku/plugn/compare/v0.1.0...v0.2.1
 [0.1.0]: https://github.com/dokku/plugn/compare/ae7f4c92579ec64d7cf3d3bd76cb6207dd8d3ed9...v0.1.0
