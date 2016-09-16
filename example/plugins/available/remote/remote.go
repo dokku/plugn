@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/progrium/duplex/poc2/duplex"
+	"github.com/dokku/duplex/poc2/duplex"
 )
 
 func main() {

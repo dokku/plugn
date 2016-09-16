@@ -9,7 +9,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/progrium/duplex/poc2/duplex"
+	"github.com/dokku/duplex/poc2/duplex"
 	"github.com/progrium/plugin-demo/demo/coproc"
 )
 
