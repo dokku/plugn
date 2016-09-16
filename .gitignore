@@ -2,4 +2,3 @@ example/plugins/enabled/*
 example/plugins/available/remote/remote
 release
 build
-bindata.go
