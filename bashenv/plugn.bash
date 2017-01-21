@@ -10,8 +10,8 @@ install() {
 	local downloader args
 	cd "$PLUGIN_PATH/available"
 	if [[ "$(basename "$url")" == *tar.gz ]]; then
-		which curl > /dev/null 2>&1 && downloader="curl" && args="-s"
-		which wget > /dev/null 2>&1 && downloader="wget" && args="-qO-"
+		which curl > /dev/null 2>&1 && downloader="curl" && args="-sL"
+		which wget > /dev/null 2>&1 && downloader="wget" && args="-q --max-redirect=1 -O-"
 
 		if [[ -z "$downloader" ]]; then
 			echo "Please install either curl or wget to install via tar.gz" 1>&2
