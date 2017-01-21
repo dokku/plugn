@@ -7,8 +7,20 @@ version() {
 install() {
 	declare desc="Install a new plugin from a Git URL"
 	declare url="$1" name="$2"
+	local downloader args
 	cd "$PLUGIN_PATH/available"
-	git clone "$url" $2
+	if [[ "$(basename "$url")" == *tar.gz ]]; then
+		which curl > /dev/null 2>&1 && downloader="curl" && args="-s"
+		which wget > /dev/null 2>&1 && downloader="wget" && args="-qO-"
+
+		if [[ -z "$downloader" ]]; then
+			echo "Please install either curl or wget to install via tar.gz" 1>&2
+			exit 1
+		fi
+		mkdir -p "$2" && "$downloader" $args "$url" | tar xz -C "$2"
+	else
+		git clone "$url" "$2"
+	fi
 	cd - > /dev/null
 }
 
