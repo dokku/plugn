@@ -19,7 +19,7 @@ install() {
 		fi
 		mkdir -p "$2" && "$downloader" $args "$url" | tar xz -C "$2"
 	else
-		git clone "$url" "$2"
+		git clone "$url" $2
 	fi
 	cd - > /dev/null
 }
