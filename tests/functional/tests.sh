@@ -63,6 +63,7 @@ T_plugn-trigger() {
 	plugn-test-pass "test-trigger" "
 		plugn init && \
 		plugn install https://github.com/dokku/smoke-test-plugin && \
+		plugn update smoke-test-plugin v0.3.0 && \
 		plugn enable smoke-test-plugin && \
 		plugn list && \
 		plugn trigger trigger | grep 'triggered smoke-test-plugin'"
