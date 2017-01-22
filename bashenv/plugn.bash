@@ -7,8 +7,8 @@ version() {
 install() {
 	declare desc="Install a new plugin from a Git URL"
 	declare url="$1" name="$2"
-	local downloader args
-	cd "$PLUGIN_PATH/available"
+	local downloader args contents cwd
+	pushd "$PLUGIN_PATH/available" &>/dev/null
 	if [[ "$(basename "$url")" == *tar.gz ]]; then
 		which curl > /dev/null 2>&1 && downloader="curl" && args="-sL"
 		which wget > /dev/null 2>&1 && downloader="wget" && args="-q --max-redirect=1 -O-"
@@ -17,11 +17,23 @@ install() {
 			echo "Please install either curl or wget to install via tar.gz" 1>&2
 			exit 1
 		fi
-		mkdir -p "$2" && "$downloader" $args "$url" | tar xz -C "$2"
+		mkdir -p "$2" && \
+			"$downloader" $args "$url" | tar xz -C "$2" && \
+			pushd "$2" &>/dev/null
+		# make sure we untarred a single dir into our target
+		contents_dirs=($(find . -maxdepth 1 -not -path '.' -type d))
+		contents_files=($(find . -maxdepth 1 -type f))
+		if [[ "${#contents_dirs[@]}" -eq 1 ]] && [[ "${#content_files[@]}" -eq 0 ]]; then
+			pushd ./* &>/dev/null && \
+				find . -maxdepth 1 -not -path '.' -exec mv -f {} ../ \;
+			cwd="$PWD"
+			popd &>/dev/null
+			rmdir "$cwd"
+		fi
 	else
 		git clone "$url" $2
 	fi
-	cd - > /dev/null
+	popd &> /dev/null
 }
 
 uninstall() {
@@ -35,7 +47,7 @@ update() {
 	declare desc="Update plugin and optionally pin to commit/tag/branch"
 	declare plugin="$1" committish="$2"
 	[[ ! -d "$PLUGIN_PATH/available/$plugin" ]] && echo "Plugin ($plugin) not installed" && exit 1
-	cd "$PLUGIN_PATH/available/$plugin"
+	pushd "$PLUGIN_PATH/available/$plugin" &>/dev/null
 	[[ -z "$committish" ]] && [[ ! $(git symbolic-ref HEAD) ]] && echo "Plugin pinned to $(< ./.plugin_committish)" && exit 0
 	git checkout master &> /dev/null
 	git pull &> /dev/null
@@ -48,7 +60,7 @@ update() {
 	else
 		echo "Plugin ($plugin) updated"
 	fi
-	cd - > /dev/null
+	popd &> /dev/null
 }
 
 list() {
