@@ -1,6 +1,6 @@
 NAME = plugn
 HARDWARE = $(shell uname -m)
-VERSION ?= 0.2.2
+VERSION ?= 0.3.0
 IMAGE_NAME ?= $(NAME)
 BUILD_TAG ?= dev
 

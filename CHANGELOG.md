@@ -1,14 +1,9 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [Unreleased][unreleased]
-### Fixed
-
+## [0.3.0] - 2017-03-19
 ### Added
-
-### Removed
-
-### Changed
+- @josegonzalez Add support for downloading via tar.gz #19
 
 ## [0.2.2] - 2016-09-16
 ### Fixed
@@ -49,7 +44,8 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - @progrium rename to plugn
 
-[unreleased]: https://github.com/dokku/plugn/compare/v0.2.2...HEAD
+[unreleased]: https://github.com/dokku/plugn/compare/v0.3.0...HEAD
+[0.3.0]: https://github.com/dokku/plugn/compare/v0.2.2...v0.3.0
 [0.2.2]: https://github.com/dokku/plugn/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/dokku/plugn/compare/v0.1.0...v0.2.1
 [0.1.0]: https://github.com/dokku/plugn/compare/ae7f4c92579ec64d7cf3d3bd76cb6207dd8d3ed9...v0.1.0

@@ -49,10 +49,21 @@ T_plugn-install-enable-disable() {
 		plugn list | grep disabled | grep smoke-test-plugin"
 }
 
+T_plugn-install-enable-disable-targz() {
+	plugn-test-pass "test-install-enable-disable" "
+		plugn init && \
+		plugn install https://github.com/dokku/smoke-test-plugin/archive/v0.3.0.tar.gz smoke-test-plugin && \
+		plugn enable smoke-test-plugin && \
+		plugn list | grep enabled | grep smoke-test-plugin && \
+		plugn disable smoke-test-plugin && \
+		plugn list | grep disabled | grep smoke-test-plugin"
+}
+
 T_plugn-trigger() {
 	plugn-test-pass "test-trigger" "
 		plugn init && \
 		plugn install https://github.com/dokku/smoke-test-plugin && \
+		plugn update smoke-test-plugin v0.3.0 && \
 		plugn enable smoke-test-plugin && \
 		plugn list && \
 		plugn trigger trigger | grep 'triggered smoke-test-plugin'"
