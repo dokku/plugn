@@ -9,7 +9,6 @@ install() {
 	declare url="$1" name="$2"
 	local basefilename
 	basefilename="$(basename "$url")"
-	pushd "$PLUGIN_PATH/available" &>/dev/null
 	if [[ "$url" == s3://* ]]; then
 		install-s3 "$url" "$name"
 	elif [[ "$basefilename" == *.tar.gz ]] || [[ "$basefilename" == *.tgz ]]; then
@@ -17,13 +16,14 @@ install() {
 	else
 		install-git "$url" "$name"
 	fi
-	popd &> /dev/null
 }
 
 install-git() {
 	declare desc="Install a plugin from git URL"
 	declare url="$1" name="$2"
+	pushd "$PLUGIN_PATH/available" &>/dev/null
 	git clone "$url" "$name"
+	popd &> /dev/null
 }
 
 install-s3() {
@@ -61,6 +61,7 @@ download-and-extract-tar() {
 	declare url="$1" name="$2" downloader="$3" args="$4"
 	local contents_dirs contents_files cwd
 
+	pushd "$PLUGIN_PATH/available" &>/dev/null
 	mkdir -p "$name" && \
 		"$downloader" $args "$url" | tar xz -C "$name" && \
 		pushd "$name" &>/dev/null
@@ -75,6 +76,7 @@ download-and-extract-tar() {
 		popd &>/dev/null
 		rmdir "$cwd"
 	fi
+	popd &> /dev/null
 }
 
 uninstall() {
