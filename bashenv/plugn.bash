@@ -22,7 +22,7 @@ install-git() {
 	declare desc="Install a plugin from git URL"
 	declare url="$1" name="$2"
 	pushd "$PLUGIN_PATH/available" &>/dev/null
-	git clone "$url" "$name"
+	git clone "$url" $name
 	popd &> /dev/null
 }
 
