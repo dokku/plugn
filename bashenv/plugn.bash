@@ -61,6 +61,11 @@ download-and-extract-tar() {
 	declare url="$1" name="$2" downloader="$3" args="$4"
 	local contents_dirs contents_files cwd
 
+	if [[ -z "$name" ]]; then
+		echo "Name argument is required for non-git installation" 1>&2
+		exit 1
+	fi
+
 	pushd "$PLUGIN_PATH/available" &>/dev/null
 	mkdir -p "$name" && \
 		"$downloader" $args "$url" | tar xz -C "$name" && \

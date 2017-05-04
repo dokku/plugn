@@ -59,6 +59,12 @@ T_plugn-install-enable-disable-targz() {
 		plugn list | grep disabled | grep smoke-test-plugin"
 }
 
+T_plugn-install-targz-without-name-fail() {
+	plugn-test-fail "test-install-enable-disable" "
+		plugn init && \
+		plugn install https://github.com/dokku/smoke-test-plugin/archive/v0.3.0.tar.gz"
+}
+
 T_plugn-trigger() {
 	plugn-test-pass "test-trigger" "
 		plugn init && \
