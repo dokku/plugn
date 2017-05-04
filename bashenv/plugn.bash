@@ -10,7 +10,9 @@ install() {
 	local basefilename
 	basefilename="$(basename "$url")"
 	pushd "$PLUGIN_PATH/available" &>/dev/null
-	if [[ "$basefilename" == *.tar.gz ]] || [[ "$basefilename" == *.tgz ]]; then
+	if [[ "$url" == s3://* ]]; then
+		install-s3 "$url" "$name"
+	elif [[ "$basefilename" == *.tar.gz ]] || [[ "$basefilename" == *.tgz ]]; then
 		install-tar "$url" "$name"
 	else
 		install-git "$url" "$name"
@@ -22,6 +24,21 @@ install-git() {
 	declare desc="Install a plugin from git URL"
 	declare url="$1" name="$2"
 	git clone "$url" "$name"
+}
+
+install-s3() {
+	declare desc="Install a plugin from git URL"
+	declare url="$1" name="$2"
+	local downloader args contents_dirs contents_files cwd
+
+	which s3cmd > /dev/null && downloader="s3cmd" && args="get -q --force"
+	which aws > /dev/null && downloader="aws" && args="s3 cp --quiet"
+
+	if [[ -z "$downloader" ]]; then
+		echo "Please install either awscli or s3cmd to install via s3" 1>&2
+		exit 1
+	fi
+	download-and-extract-tar "$url" "$name" "$downloader" "$args"
 }
 
 install-tar() {
