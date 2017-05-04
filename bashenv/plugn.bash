@@ -7,34 +7,57 @@ version() {
 install() {
 	declare desc="Install a new plugin from a Git URL"
 	declare url="$1" name="$2"
-	local basefilename downloader args contents cwd
+	local basefilename
 	basefilename="$(basename "$url")"
 	pushd "$PLUGIN_PATH/available" &>/dev/null
 	if [[ "$basefilename" == *.tar.gz ]] || [[ "$basefilename" == *.tgz ]]; then
-		which curl > /dev/null 2>&1 && downloader="curl" && args="-sL"
-		which wget > /dev/null 2>&1 && downloader="wget" && args="-q --max-redirect=1 -O-"
-
-		if [[ -z "$downloader" ]]; then
-			echo "Please install either curl or wget to install via tar.gz" 1>&2
-			exit 1
-		fi
-		mkdir -p "$2" && \
-			"$downloader" $args "$url" | tar xz -C "$2" && \
-			pushd "$2" &>/dev/null
-		# make sure we untarred a single dir into our target
-		contents_dirs=($(find . -maxdepth 1 -not -path '.' -type d))
-		contents_files=($(find . -maxdepth 1 -type f))
-		if [[ "${#contents_dirs[@]}" -eq 1 ]] && [[ "${#content_files[@]}" -eq 0 ]]; then
-			pushd ./* &>/dev/null && \
-				find . -maxdepth 1 -not -path '.' -exec mv -f {} ../ \;
-			cwd="$PWD"
-			popd &>/dev/null
-			rmdir "$cwd"
-		fi
+		install-tar "$url" "$name"
 	else
-		git clone "$url" $2
+		install-git "$url" "$name"
 	fi
 	popd &> /dev/null
+}
+
+install-git() {
+	declare desc="Install a plugin from git URL"
+	declare url="$1" name="$2"
+	git clone "$url" "$name"
+}
+
+install-tar() {
+	declare desc="Install a plugin from tar URL"
+	declare url="$1" name="$2"
+	local downloader args
+
+	which curl > /dev/null 2>&1 && downloader="curl" && args="-sL"
+	which wget > /dev/null 2>&1 && downloader="wget" && args="-q --max-redirect=1 -O-"
+
+	if [[ -z "$downloader" ]]; then
+		echo "Please install either curl or wget to install via tar.gz" 1>&2
+		exit 1
+	fi
+	download-and-extract-tar "$url" "$name" "$downloader" "$args"
+}
+
+download-and-extract-tar() {
+	declare desc="Downloads and extracts a tar file"
+	declare url="$1" name="$2" downloader="$3" args="$4"
+	local contents_dirs contents_files cwd
+
+	mkdir -p "$name" && \
+		"$downloader" $args "$url" | tar xz -C "$name" && \
+		pushd "$name" &>/dev/null
+
+	# make sure we untarred a single dir into our target
+	contents_dirs=($(find . -maxdepth 1 -not -path '.' -type d))
+	contents_files=($(find . -maxdepth 1 -type f))
+	if [[ "${#contents_dirs[@]}" -eq 1 ]] && [[ "${#content_files[@]}" -eq 0 ]]; then
+		pushd ./* &>/dev/null && \
+			find . -maxdepth 1 -not -path '.' -exec mv -f {} ../ \;
+		cwd="$PWD"
+		popd &>/dev/null
+		rmdir "$cwd"
+	fi
 }
 
 uninstall() {
@@ -83,7 +106,7 @@ trigger() {
 	shopt -s nullglob
 	for plugin in $PLUGIN_PATH/enabled/*; do
 		eval "$(config-export $(basename $plugin))"
-  		[[ -x "$plugin/$hook" ]] && $plugin/$hook "$@"
+		[[ -x "$plugin/$hook" ]] && $plugin/$hook "$@"
 	done
 	shopt -u nullglob
 	trigger-gateway $hook "$@"
@@ -136,7 +159,7 @@ _source() {
 	declare desc="Source commands for sourcable plugins"
 	shopt -s nullglob
 	for plugin in $PLUGIN_PATH/enabled/*; do
-  		[[ -f "$plugin/$(basename $plugin).sh" ]] && echo "source $plugin/$(basename $plugin).sh"
+		[[ -f "$plugin/$(basename $plugin).sh" ]] && echo "source $plugin/$(basename $plugin).sh"
 	done
 	shopt -u nullglob
 }
