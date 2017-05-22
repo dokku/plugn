@@ -31,11 +31,10 @@ install-s3() {
 	declare url="$1" name="$2"
 	local downloader args contents_dirs contents_files cwd
 
-	which s3cmd > /dev/null && downloader="s3cmd" && args="get -q --force"
 	which aws > /dev/null && downloader="aws" && args="s3 cp --quiet"
 
 	if [[ -z "$downloader" ]]; then
-		echo "Please install either awscli or s3cmd to install via s3" 1>&2
+		echo "Please install the awscli to install plugins via s3" 1>&2
 		exit 1
 	fi
 	download-and-extract-tar "$url" "$name" "$downloader" "$args"
