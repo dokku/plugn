@@ -1,0 +1,35 @@
+version: 2
+jobs:
+  build:
+    machine:
+      docker_layer_caching: true
+    steps:
+      - checkout
+      - run:
+          command: |
+            make version
+            if [[ "$CIRCLE_BRANCH" == "release" ]]; then
+              export PACKAGECLOUD_REPOSITORY=dokku/dokku
+              make .env.docker
+            fi
+      - run: make circleci
+      - run: make build-docker-image
+      - run:
+          command: |
+            make build-in-docker
+            [[ -d build ]]  && sudo chown -R circleci:circleci build
+            [[ -d vendor ]] && sudo chown -R circleci:circleci vendor
+      - run:
+          command: |
+            ls -lah
+            make store-artifacts
+      - run: make validate-in-docker
+      - store_artifacts:
+          path: /tmp/artifacts
+          destination: build
+      - run:
+          command: |
+            if [[ "$CIRCLE_BRANCH" == "release" ]]; then
+              make release-in-docker
+            fi
+            make release-packagecloud-in-docker

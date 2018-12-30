@@ -1,4 +1,28 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Build output
+build/*
+
+# Release output
+release/*
+
+# Validation output
+validation/*
+
+# .env files
+.env*
+
 example/plugins/enabled/*
 example/plugins/available/remote/remote
-release
-build
+
