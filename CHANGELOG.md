@@ -1,6 +1,13 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.3.1] - 2019-03-15
+### Added
+- @josegonzalez Store builds as CI artifacts #28
+
+### Changed
+- @josegonzalez Allow specifying a custom bashPath via environment variable #27
+
 ## [0.3.0] - 2017-03-19
 ### Added
 - @josegonzalez Add support for downloading via tar.gz #19
@@ -44,7 +51,8 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - @progrium rename to plugn
 
-[unreleased]: https://github.com/dokku/plugn/compare/v0.3.0...HEAD
+[unreleased]: https://github.com/dokku/plugn/compare/v0.3.1...HEAD
+[0.3.1]: https://github.com/dokku/plugn/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/dokku/plugn/compare/v0.2.2...v0.3.0
 [0.2.2]: https://github.com/dokku/plugn/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/dokku/plugn/compare/v0.1.0...v0.2.1

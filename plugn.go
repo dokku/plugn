@@ -84,16 +84,23 @@ func main() {
 		runGateway()
 		return
 	}
-	basher.Application(map[string]func([]string){
+	funcs := map[string]func([]string){
 		"toml-get":        TomlGet,
 		"toml-set":        TomlSet,
 		"toml-export":     TomlExport,
 		"trigger-gateway": TriggerGateway,
 		"reload-gateway":  ReloadGateway,
-	}, []string{
+	}
+	scripts := []string{
 		"bashenv/bash.bash",
 		"bashenv/fn.bash",
 		"bashenv/cmd.bash",
 		"bashenv/plugn.bash",
-	}, Asset, true)
+	}
+
+	if os.Getenv("BASH_BIN") == "" {
+		basher.Application(funcs, scripts, Asset, true)
+	} else {
+		basher.ApplicationWithPath(funcs, scripts, Asset, true, os.Getenv("BASH_BIN"))
+	}
 }
