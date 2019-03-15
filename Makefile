@@ -19,7 +19,6 @@ deps:
 	go get -u github.com/progrium/gh-release/...
 	go get -u github.com/progrium/basht/...
 	go get -u github.com/tools/godep
-	godep restore
 
 release: build
 	rm -rf release && mkdir release
@@ -31,7 +30,7 @@ build-in-docker:
 	docker build --rm -f Dockerfile.build -t $(NAME)-build .
 	docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro \
 		-v /var/lib/docker:/var/lib/docker \
-		-v ${PWD}:/go/src/github.com/dokku/plugn -w /go/src/github.com/dokku/plugn \
+		-v ${PWD}:/src/github.com/dokku/plugn -w /src/github.com/dokku/plugn \
 		-e IMAGE_NAME=$(IMAGE_NAME) -e BUILD_TAG=$(BUILD_TAG) -e VERSION=master \
 		$(NAME)-build make -e deps build
 	docker rmi $(NAME)-build || true
