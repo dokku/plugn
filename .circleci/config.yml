@@ -7,13 +7,13 @@ jobs:
     steps:
       - checkout
       - run: |
-          go version
-          make circleci
-      - run: |
           sudo add-apt-repository ppa:longsleep/golang-backports
           sudo apt-get update
           sudo apt-get install golang-go
 
+          go version
+          make circleci
+      - run: |
           make deps
       - run: |
           GO111MODULE=on make build
