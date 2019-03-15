@@ -10,22 +10,16 @@ jobs:
           sudo add-apt-repository ppa:gophers/archive -y
           sudo apt-get update
           sudo apt-get -y install golang-1.11
-          export PATH="/usr/lib/go-1.11/bin:$PATH"
-          go version
-          make circleci
+          PATH="/usr/lib/go-1.11/bin:$PATH" make circleci
       - run: |
-          export PATH="/usr/lib/go-1.11/bin:$PATH"
           make deps
       - run: |
-          export PATH="/usr/lib/go-1.11/bin:$PATH"
-          GO111MODULE=on make build
+          PATH="/usr/lib/go-1.11/bin:$PATH" GO111MODULE=on make build
       - run: |
-          export PATH="/usr/lib/go-1.11/bin:$PATH"
-          tests/**/tests.sh
+          PATH="/usr/lib/go-1.11/bin:$PATH" tests/**/tests.sh
       - deploy:
           name: release
           command: |
-            export PATH="/usr/lib/go-1.11/bin:$PATH"
             if [ "${CIRCLE_BRANCH}" == "release" ]; then
-              make release
+              PATH="/usr/lib/go-1.11/bin:$PATH" make release
             fi
