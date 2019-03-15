@@ -32,16 +32,16 @@ deps:
 	go get -u github.com/progrium/basht/...
 
 gh-release:
-	mkdir -p build
-	curl -o build/gh-release.tgz -sL https://github.com/progrium/gh-release/releases/download/v2.2.1/gh-release_2.2.1_$(SYSTEM_NAME)_$(HARDWARE).tgz
-	tar xf build/gh-release.tgz -C build
-	chmod +x build/gh-release
+	mkdir -p bin
+	curl -o bin/gh-release.tgz -sL https://github.com/progrium/gh-release/releases/download/v2.2.1/gh-release_2.2.1_$(SYSTEM_NAME)_$(HARDWARE).tgz
+	tar xf bin/gh-release.tgz -C bin
+	chmod +x bin/gh-release
 
 release: build gh-release
 	rm -rf release && mkdir release
 	tar -zcf release/$(NAME)_$(VERSION)_linux_$(HARDWARE).tgz -C build/linux $(NAME)
 	tar -zcf release/$(NAME)_$(VERSION)_darwin_$(HARDWARE).tgz -C build/darwin $(NAME)
-	build/gh-release create dokku/$(NAME) $(VERSION) $(shell git rev-parse --abbrev-ref HEAD)
+	bin/gh-release create dokku/$(NAME) $(VERSION) $(shell git rev-parse --abbrev-ref HEAD)
 
 build-in-docker:
 	docker build --rm -f Dockerfile.build -t $(NAME)-build .

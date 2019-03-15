@@ -15,6 +15,9 @@ jobs:
           sudo apt-get -y install golang-1.11
       - run: |
           PATH="/usr/lib/go-1.11/bin:$PATH" GO111MODULE=on make build
+      - store_artifacts:
+          path: build
+          destination: build
       - run: |
           PATH="/usr/lib/go-1.11/bin:$PATH" tests/**/tests.sh
       - deploy:
