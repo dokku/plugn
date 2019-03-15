@@ -1,2 +1,2 @@
-FROM golang:1.6.3
+FROM golang:1.12.9
 RUN curl -fsSLO https://get.docker.com/builds/Linux/x86_64/docker-1.12.1.tgz && tar --strip-components=1 -xvzf docker-1.12.1.tgz -C /usr/local/bin
