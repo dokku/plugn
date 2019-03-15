@@ -10,6 +10,10 @@ jobs:
           go version
           make circleci
       - run: |
+          add-apt-repository ppa:longsleep/golang-backports
+          apt-get update
+          apt-get install golang-go
+
           make deps
       - run: |
           GO111MODULE=on make build
