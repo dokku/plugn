@@ -9,7 +9,7 @@ jobs:
       - run: |
           sudo add-apt-repository ppa:longsleep/golang-backports -y
           sudo apt-get update
-          sudo apt-get -y install golang-go
+          sudo apt-get -y install golang-1.11
 
           go version
           make circleci
