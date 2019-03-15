@@ -6,24 +6,42 @@ BUILD_TAG ?= dev
 
 build:
 	go-bindata bashenv
-	mkdir -p build/linux  && GOOS=linux  go build -a -ldflags "-X main.Version $(VERSION)" -o build/linux/$(NAME)
-	mkdir -p build/darwin && GOOS=darwin go build -a -ldflags "-X main.Version $(VERSION)" -o build/darwin/$(NAME)
+	$(MAKE) build/darwin/$(NAME)
+	$(MAKE) build/linux/$(NAME)
 ifeq ($(CIRCLECI),true)
 	docker build -t $(IMAGE_NAME):$(BUILD_TAG) .
 else
 	docker build -f Dockerfile.dev -t $(IMAGE_NAME):$(BUILD_TAG) .
 endif
 
+
+build/darwin/$(NAME):
+	mkdir -p build/darwin
+	CGO_ENABLED=0 GOOS=darwin go build -a -asmflags=-trimpath=/src -gcflags=-trimpath=/src \
+										-ldflags "-X main.Version=$(VERSION)" \
+										-o build/darwin/$(NAME)
+
+build/linux/$(NAME):
+	mkdir -p build/linux
+	CGO_ENABLED=0 GOOS=linux go build -a -asmflags=-trimpath=/src -gcflags=-trimpath=/src \
+										-ldflags "-X main.Version=$(VERSION)" \
+										-o build/linux/$(NAME)
+
 deps:
 	go get -u github.com/jteeuwen/go-bindata/...
-	go get -u github.com/progrium/gh-release/...
 	go get -u github.com/progrium/basht/...
 
-release: build
+gh-release:
+	mkdir -p build
+	curl -o build/gh-release.tgz -sL https://github.com/progrium/gh-release/releases/download/v2.2.1/gh-release_2.2.1_$(SYSTEM_NAME)_$(HARDWARE).tgz
+	tar xf build/gh-release.tgz -C build
+	chmod +x build/gh-release
+
+release: build gh-release
 	rm -rf release && mkdir release
 	tar -zcf release/$(NAME)_$(VERSION)_linux_$(HARDWARE).tgz -C build/linux $(NAME)
 	tar -zcf release/$(NAME)_$(VERSION)_darwin_$(HARDWARE).tgz -C build/darwin $(NAME)
-	gh-release create dokku/$(NAME) $(VERSION) $(shell git rev-parse --abbrev-ref HEAD)
+	build/gh-release create dokku/$(NAME) $(VERSION) $(shell git rev-parse --abbrev-ref HEAD)
 
 build-in-docker:
 	docker build --rm -f Dockerfile.build -t $(NAME)-build .
