@@ -1,0 +1,25 @@
+version: 2
+jobs:
+  build:
+    machine: true
+    working_directory: ~/dokku/plugn
+    parallelism: 1
+    steps:
+      - checkout
+      - run: |
+          make circleci
+      - run: |
+          make deps
+          sudo add-apt-repository ppa:gophers/archive -y
+          sudo apt-get update
+          sudo apt-get -y install golang-1.11
+      - run: |
+          PATH="/usr/lib/go-1.11/bin:$PATH" GO111MODULE=on make build
+      - run: |
+          PATH="/usr/lib/go-1.11/bin:$PATH" tests/**/tests.sh
+      - deploy:
+          name: release
+          command: |
+            if [ "${CIRCLE_BRANCH}" == "release" ]; then
+              PATH="/usr/lib/go-1.11/bin:$PATH" make release
+            fi
