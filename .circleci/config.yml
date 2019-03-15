@@ -7,12 +7,12 @@ jobs:
     steps:
       - checkout
       - run: |
-          sudo add-apt-repository ppa:gophers/archive -y
-          sudo apt-get update
-          sudo apt-get -y install golang-1.11
           PATH="/usr/lib/go-1.11/bin:$PATH" make circleci
       - run: |
           make deps
+          sudo add-apt-repository ppa:gophers/archive -y
+          sudo apt-get update
+          sudo apt-get -y install golang-1.11
       - run: |
           PATH="/usr/lib/go-1.11/bin:$PATH" GO111MODULE=on make build
       - run: |
