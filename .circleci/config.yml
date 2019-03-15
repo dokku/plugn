@@ -20,9 +20,3 @@ jobs:
             if [ "${CIRCLE_BRANCH}" == "release" ]; then
               make release
             fi
-
-deployment:
-  release:
-    branch: release
-    commands:
-      - make release
