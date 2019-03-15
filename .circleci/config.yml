@@ -7,7 +7,7 @@ jobs:
     steps:
       - checkout
       - run: |
-          PATH="/usr/lib/go-1.11/bin:$PATH" make circleci
+          make circleci
       - run: |
           make deps
           sudo add-apt-repository ppa:gophers/archive -y
