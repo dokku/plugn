@@ -7,21 +7,25 @@ jobs:
     steps:
       - checkout
       - run: |
-          sudo add-apt-repository ppa:longsleep/golang-backports -y
+          sudo add-apt-repository ppa:gophers/archive -y
           sudo apt-get update
-          sudo apt-get -y install golang-1.12
-          ls -lah /usr/lib/ | grep go-
+          sudo apt-get -y install golang-1.11
+          export PATH="/usr/lib/go-1.X/bin:$PATH"
           go version
           make circleci
       - run: |
+          export PATH="/usr/lib/go-1.X/bin:$PATH"
           make deps
       - run: |
+          export PATH="/usr/lib/go-1.X/bin:$PATH"
           GO111MODULE=on make build
       - run: |
+          export PATH="/usr/lib/go-1.X/bin:$PATH"
           tests/**/tests.sh
       - deploy:
           name: release
           command: |
+            export PATH="/usr/lib/go-1.X/bin:$PATH"
             if [ "${CIRCLE_BRANCH}" == "release" ]; then
               make release
             fi
