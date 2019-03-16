@@ -159,7 +159,7 @@ release-packagecloud-deb: build/deb/$(NAME)_$(VERSION)_amd64.deb
 release-packagecloud-rpm: build/rpm/$(NAME)-$(VERSION)-1.x86_64.rpm
 	package_cloud push $(PACKAGECLOUD_REPOSITORY)/el/7           build/rpm/$(NAME)-$(VERSION)-1.x86_64.rpm
 
-validate:
+validate: pre-build
 	basht tests/*/tests.sh
 	mkdir -p validation
 	lintian build/deb/$(NAME)_$(VERSION)_amd64.deb || true
