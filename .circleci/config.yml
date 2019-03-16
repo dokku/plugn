@@ -9,7 +9,7 @@ jobs:
           command: |
             make version
             if [[ "$CIRCLE_BRANCH" == "release" ]]; then
-              export PACKAGECLOUD_REPOSITORY=josegonzalez/packages
+              export PACKAGECLOUD_REPOSITORY=dokku/dokku
               make .env.docker
             fi
       - run: make circleci
