@@ -11,10 +11,10 @@ PACKAGECLOUD_REPOSITORY ?= dokku/dokku-betafish
 
 ifeq ($(CIRCLE_BRANCH),release)
 	VERSION ?= $(BASE_VERSION)
-	DOCKER_VERSION = $(VERSION)
+	DOCKER_IMAGE_VERSION = $(VERSION)
 else
 	VERSION = $(shell echo "${BASE_VERSION}")build+$(shell git rev-parse --short HEAD)
-	DOCKER_VERSION = $(shell echo "${BASE_VERSION}")build-$(shell git rev-parse --short HEAD)
+	DOCKER_IMAGE_VERSION = $(shell echo "${BASE_VERSION}")build-$(shell git rev-parse --short HEAD)
 endif
 
 version:
@@ -121,7 +121,7 @@ circleci:
 	rm -f ~/.gitconfig
 
 docker-image:
-	docker build --rm -q -f Dockerfile.hub -t $(IMAGE_NAME):$(DOCKER_VERSION) .
+	docker build --rm -q -f Dockerfile.hub -t $(IMAGE_NAME):$(DOCKER_IMAGE_VERSION) .
 	docker tag $(IMAGE_NAME):$(DOCKER_IMAGE_VERSION) $(IMAGE_NAME):hub
 
 bin/gh-release:
