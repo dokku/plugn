@@ -1,6 +1,6 @@
 NAME = plugn
 EMAIL = plugn@josediazgonzalez.com
-MAINTAINER = josegonzalez
+MAINTAINER = dokku
 MAINTAINER_NAME = Jose Diaz-Gonzalez
 REPOSITORY = plugn
 HARDWARE = $(shell uname -m)
