@@ -2,14 +2,14 @@
 plugn-test-pass() {
 	declare name="$1" script="$2"
 	docker run $([[ "$CI" ]] || echo "--rm") -v "$PWD:/mnt" \
-		"plugn:dev" bash -c "set -e; export PLUGIN_PATH=/var/lib/plugins; $script" \
+		"dokku/plugn:hub" bash -c "set -e; export PLUGIN_PATH=/var/lib/plugins; $script" \
 		|| $T_fail "$name exited non-zero"
 }
 
 plugn-test-fail() {
 	declare name="$1" script="$2"
 	docker run $([[ "$CI" ]] || echo "--rm") -v "$PWD:/mnt" \
-		"plugn:dev" bash -c "set -e; export PLUGIN_PATH=/var/lib/plugins; $script" \
+		"dokku/plugn:hub" bash -c "set -e; export PLUGIN_PATH=/var/lib/plugins; $script" \
 		|| echo "$name exited non-zero (as expected)"
 }
 

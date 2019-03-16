@@ -159,8 +159,7 @@ release-packagecloud-deb: build/deb/$(NAME)_$(VERSION)_amd64.deb
 release-packagecloud-rpm: build/rpm/$(NAME)-$(VERSION)-1.x86_64.rpm
 	package_cloud push $(PACKAGECLOUD_REPOSITORY)/el/7           build/rpm/$(NAME)-$(VERSION)-1.x86_64.rpm
 
-validate: pre-build
-	basht tests/*/tests.sh
+validate: test
 	mkdir -p validation
 	lintian build/deb/$(NAME)_$(VERSION)_amd64.deb || true
 	dpkg-deb --info build/deb/$(NAME)_$(VERSION)_amd64.deb
@@ -174,3 +173,6 @@ validate: pre-build
 pre-build:
 	cd / && go get -u github.com/jteeuwen/go-bindata/...
 	cd / && go get -u github.com/progrium/basht/...
+
+test: pre-build docker-image
+	basht tests/*/tests.sh
