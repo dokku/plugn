@@ -1,5 +1,6 @@
 NAME = plugn
 HARDWARE = $(shell uname -m)
+SYSTEM_NAME  = $(shell uname -s | tr '[:upper:]' '[:lower:]')
 VERSION ?= 0.3.1
 IMAGE_NAME ?= $(NAME)
 BUILD_TAG ?= dev
@@ -31,13 +32,13 @@ deps:
 	go get -u github.com/jteeuwen/go-bindata/...
 	go get -u github.com/progrium/basht/...
 
-gh-release:
+bin/gh-release:
 	mkdir -p bin
 	curl -o bin/gh-release.tgz -sL https://github.com/progrium/gh-release/releases/download/v2.2.1/gh-release_2.2.1_$(SYSTEM_NAME)_$(HARDWARE).tgz
 	tar xf bin/gh-release.tgz -C bin
 	chmod +x bin/gh-release
 
-release: build gh-release
+release: build bin/gh-release
 	rm -rf release && mkdir release
 	tar -zcf release/$(NAME)_$(VERSION)_linux_$(HARDWARE).tgz -C build/linux $(NAME)
 	tar -zcf release/$(NAME)_$(VERSION)_darwin_$(HARDWARE).tgz -C build/darwin $(NAME)
