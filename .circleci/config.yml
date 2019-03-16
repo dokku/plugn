@@ -1,28 +1,30 @@
 version: 2
 jobs:
   build:
-    machine: true
-    working_directory: ~/dokku/plugn
-    parallelism: 1
+    machine:
+      docker_layer_caching: true
     steps:
       - checkout
-      - run: |
-          make circleci
-      - run: |
-          make deps
-          sudo add-apt-repository ppa:gophers/archive -y
-          sudo apt-get update
-          sudo apt-get -y install golang-1.11
-      - run: |
-          PATH="/usr/lib/go-1.11/bin:$PATH" GO111MODULE=on make build
+      - run:
+          command: |
+            make version
+            if [[ "$CIRCLE_BRANCH" == "release" ]]; then
+              export PACKAGECLOUD_REPOSITORY=josegonzalez/packages
+              make .env.docker
+            fi
+      - run: make circleci
+      - run: make build-docker-image
+      - run:
+          command: |
+            make build-in-docker
+            [[ -d build ]]  && sudo chown -R circleci:circleci build
+      - run: make validate-in-docker
       - store_artifacts:
           path: build
           destination: build
-      - run: |
-          PATH="/usr/lib/go-1.11/bin:$PATH" tests/**/tests.sh
-      - deploy:
-          name: release
+      - run:
           command: |
-            if [ "${CIRCLE_BRANCH}" == "release" ]; then
-              PATH="/usr/lib/go-1.11/bin:$PATH" make release
+            if [[ "$CIRCLE_BRANCH" == "release" ]]; then
+              make release-in-docker
             fi
+            make release-packagecloud-in-docker
