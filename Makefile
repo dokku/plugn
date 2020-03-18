@@ -22,8 +22,8 @@ version:
 	@echo "$(VERSION)"
 
 define PACKAGE_DESCRIPTION
-Utility that allows users to register arbitrary services
-against avahi
+Hook system that lets users extend your application
+with plugins
 endef
 
 export PACKAGE_DESCRIPTION
