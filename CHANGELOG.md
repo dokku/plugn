@@ -1,6 +1,17 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.4.0] - 2020-05-06
+### Added
+- @josegonzalez Release packages for focal #37
+
+### Changed
+- @josegonzalez drop releases for old operating systems #35
+- @josegonzalez upgrade go-basher #36
+
+### Fixed
+- @josegonzalez Corrected the package description
+
 ## [0.3.2] - 2019-03-16
 ### Added
 - @josegonzalez Add missing SYSTEM_NAME to Makefile #30
@@ -55,7 +66,8 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - @progrium rename to plugn
 
-[unreleased]: https://github.com/dokku/plugn/compare/v0.3.2...HEAD
+[unreleased]: https://github.com/dokku/plugn/compare/v0.4.0...HEAD
+[0.4.0]: https://github.com/dokku/plugn/compare/v0.3.2...v0.4.0
 [0.3.2]: https://github.com/dokku/plugn/compare/v0.3.1...v0.3.2
 [0.3.1]: https://github.com/dokku/plugn/compare/v0.3.0...v0.3.1
 [0.3.0]: https://github.com/dokku/plugn/compare/v0.2.2...v0.3.0

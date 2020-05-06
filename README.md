@@ -4,7 +4,7 @@ Hook system that lets users extend your application with plugins
 
 ## Installation
 ```
-$ wget -qO /tmp/plugn_latest.tgz https://github.com/dokku/plugn/releases/download/v0.3.2/plugn_0.3.2_linux_x86_64.tgz
+$ wget -qO /tmp/plugn_latest.tgz https://github.com/dokku/plugn/releases/download/v0.4.0/plugn_0.4.0_linux_x86_64.tgz
 $ tar xzf /tmp/plugn_latest.tgz -C /usr/local/bin
 ```
 
