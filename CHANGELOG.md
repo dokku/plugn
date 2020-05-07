@@ -1,6 +1,11 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.5.0] - 2020-05-07
+
+### Changed
+- @josegonzalez Upgraded go-basher (includes bash upgrade)
+
 ## [0.4.0] - 2020-05-06
 ### Added
 - @josegonzalez Release packages for focal #37
@@ -66,7 +71,8 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - @progrium rename to plugn
 
-[unreleased]: https://github.com/dokku/plugn/compare/v0.4.0...HEAD
+[unreleased]: https://github.com/dokku/plugn/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/dokku/plugn/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/dokku/plugn/compare/v0.3.2...v0.4.0
 [0.3.2]: https://github.com/dokku/plugn/compare/v0.3.1...v0.3.2
 [0.3.1]: https://github.com/dokku/plugn/compare/v0.3.0...v0.3.1
