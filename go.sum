@@ -20,6 +20,8 @@ github.com/pborman/uuid v0.0.0-20160824210600-b984ec7fa9ff h1:pTiDfW+iOjIxjZeCm8
 github.com/pborman/uuid v0.0.0-20160824210600-b984ec7fa9ff/go.mod h1:VyrYX9gd7irzKovcSS6BIIEwPRkP2Wm2m9ufcdFSJ34=
 github.com/pborman/uuid v1.2.0 h1:J7Q5mO4ysT1dv8hyrUGHb9+ooztCXu1D8MY8DZYsu3g=
 github.com/pborman/uuid v1.2.0/go.mod h1:X/NO0urCmaxf9VXbdlT7C2Yzkj2IKimNn4k+gtPdI/k=
+github.com/pborman/uuid v1.2.1 h1:+ZZIw58t/ozdjRaXh/3awHfmWRbzYxJoAdNJxe/3pvw=
+github.com/pborman/uuid v1.2.1/go.mod h1:X/NO0urCmaxf9VXbdlT7C2Yzkj2IKimNn4k+gtPdI/k=
 github.com/progrium/crypto v0.0.0-20141231035031-e04455474e32 h1:TazRiCelU8NoJMn2z0/RIzv4lUUkp5YwAunbjUsODHQ=
 github.com/progrium/crypto v0.0.0-20141231035031-e04455474e32/go.mod h1:spjB7wUvxDfIjoK9jtlCu07B/QaZwjtKlQeM3njS9QA=
 github.com/progrium/go-basher v0.0.0-20150902213704-ad5de635edd1 h1:2BV2s3/Hy+PXTFAOn+q27LuYQffCFN79JfK0fu/JH9I=
