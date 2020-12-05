@@ -10,7 +10,7 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/pborman/uuid v1.2.1 // indirect
 	github.com/progrium/crypto v0.0.0-20141231035031-e04455474e32 // indirect
-	github.com/progrium/go-basher v0.0.0-20200507184539-7aca7038b313
+	github.com/progrium/go-basher v0.0.0-20201205064939-357fd3d77cbf
 	github.com/progrium/plugin-demo v0.0.0-20160206152045-d94df2206a64
 	golang.org/x/crypto v0.0.0-20201203163018-be400aefbc4c // indirect
 )

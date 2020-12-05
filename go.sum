@@ -16,6 +16,8 @@ github.com/progrium/crypto v0.0.0-20141231035031-e04455474e32 h1:TazRiCelU8NoJMn
 github.com/progrium/crypto v0.0.0-20141231035031-e04455474e32/go.mod h1:spjB7wUvxDfIjoK9jtlCu07B/QaZwjtKlQeM3njS9QA=
 github.com/progrium/go-basher v0.0.0-20200507184539-7aca7038b313 h1:nsApkn3nQzXR9DP9yam0NmO7Y96vvu/XsjRQKJhjQac=
 github.com/progrium/go-basher v0.0.0-20200507184539-7aca7038b313/go.mod h1:Oiy7jZEU1mm+gI1dt5MKYwxptmD37q8/UupxnwhMHtI=
+github.com/progrium/go-basher v0.0.0-20201205064939-357fd3d77cbf h1:eQ1Mq8ehUOHJA9C/rrrOQgurjIXC1S2Fq1aNvscivak=
+github.com/progrium/go-basher v0.0.0-20201205064939-357fd3d77cbf/go.mod h1:Oiy7jZEU1mm+gI1dt5MKYwxptmD37q8/UupxnwhMHtI=
 github.com/progrium/plugin-demo v0.0.0-20160206152045-d94df2206a64 h1:FHNCTel7Yt0+4I1uvKfu2X+g8U8tHBBJb7zl+ohfmqM=
 github.com/progrium/plugin-demo v0.0.0-20160206152045-d94df2206a64/go.mod h1:xwVfSlPMRhFysvnn0lOZ1Ruen2jTuzgwm4Hs0onTrlY=
 golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2/go.mod h1:djNgcEr1/C05ACkg1iLfiJU5Ep61QUkGW8qpdssI0+w=
