@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.5.1] - 2020-12-05
+
+### Changed
+- @josegonzalez Update progrium/go-basher from v4 to v5
+- @dependabot-preview chore(deps): bump github.com/pborman/uuid from 1.2.0 to 1.2.1
+
 ## [0.5.0] - 2020-05-07
 
 ### Changed
@@ -71,7 +77,8 @@ All notable changes to this project will be documented in this file.
 ### Changed
 - @progrium rename to plugn
 
-[unreleased]: https://github.com/dokku/plugn/compare/v0.5.0...HEAD
+[unreleased]: https://github.com/dokku/plugn/compare/v0.5.1...HEAD
+[0.5.1]: https://github.com/dokku/plugn/compare/v0.5.0...v0.5.1
 [0.5.0]: https://github.com/dokku/plugn/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/dokku/plugn/compare/v0.3.2...v0.4.0
 [0.3.2]: https://github.com/dokku/plugn/compare/v0.3.1...v0.3.2
