@@ -1,18 +1,24 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
-## [0.5.1] - 2020-12-05
+## [0.6.0](https://github.com/dokku/plugn/compare/v0.5.1...v0.6.0) - 2020-12-20
+
+### Changed
+
+- @josegonzalez upgrade to uncompressed bash 5.1-patch4
+
+## [0.5.1](https://github.com/dokku/plugn/compare/v0.5.0...v0.5.1) - 2020-12-05
 
 ### Changed
 - @josegonzalez Update progrium/go-basher from v4 to v5
 - @dependabot-preview chore(deps): bump github.com/pborman/uuid from 1.2.0 to 1.2.1
 
-## [0.5.0] - 2020-05-07
+## [0.5.0](https://github.com/dokku/plugn/compare/v0.4.0...v0.5.0) - 2020-05-07
 
 ### Changed
 - @josegonzalez Upgraded go-basher (includes bash upgrade)
 
-## [0.4.0] - 2020-05-06
+## [0.4.0](https://github.com/dokku/plugn/compare/v0.3.2...v0.4.0) - 2020-05-06
 ### Added
 - @josegonzalez Release packages for focal #37
 
@@ -23,22 +29,22 @@ All notable changes to this project will be documented in this file.
 ### Fixed
 - @josegonzalez Corrected the package description
 
-## [0.3.2] - 2019-03-16
+## [0.3.2](https://github.com/dokku/plugn/compare/v0.3.1...v0.3.2) - 2019-03-16
 ### Added
 - @josegonzalez Add missing SYSTEM_NAME to Makefile #30
 
-## [0.3.1] - 2019-03-15
+## [0.3.1](https://github.com/dokku/plugn/compare/v0.3.0...v0.3.1) - 2019-03-15
 ### Added
 - @josegonzalez Store builds as CI artifacts #28
 
 ### Changed
 - @josegonzalez Allow specifying a custom bashPath via environment variable #27
 
-## [0.3.0] - 2017-03-19
+## [0.3.0](https://github.com/dokku/plugn/compare/v0.2.2...v0.3.0) - 2017-03-19
 ### Added
 - @josegonzalez Add support for downloading via tar.gz #19
 
-## [0.2.2] - 2016-09-16
+## [0.2.2](https://github.com/dokku/plugn/compare/v0.2.1...v0.2.2) - 2016-09-16
 ### Fixed
 - @michaelshobbs bring back bindata.go
 - @michaelshobbs updated bindata.go
@@ -48,7 +54,7 @@ All notable changes to this project will be documented in this file.
 - @michaelshobbs use docker 1.12.1
 - @michaelshobbs use dokku fork of duplex and vendor deps. closes #16
 
-## [0.2.1] - 2015-12-24
+## [0.2.1](https://github.com/dokku/plugn/compare/v0.1.0...v0.2.1) - 2015-12-24
 ### Fixed
 - @lalyos Fix missing newlines
 - @spesnova Fix typo
@@ -70,20 +76,9 @@ All notable changes to this project will be documented in this file.
 - @tombell Update to latest go-basher api
 - @josegonzalez Make it possible to run `plugn init` multiple times
 
-## [0.1.0] - 2014-11-02
+## [0.1.0](https://github.com/dokku/plugn/compare/ae7f4c92579ec64d7cf3d3bd76cb6207dd8d3ed9...v0.1.0) - 2014-11-02
 ### Fixed
 - @progrium fix newline issie
 
 ### Changed
 - @progrium rename to plugn
-
-[unreleased]: https://github.com/dokku/plugn/compare/v0.5.1...HEAD
-[0.5.1]: https://github.com/dokku/plugn/compare/v0.5.0...v0.5.1
-[0.5.0]: https://github.com/dokku/plugn/compare/v0.4.0...v0.5.0
-[0.4.0]: https://github.com/dokku/plugn/compare/v0.3.2...v0.4.0
-[0.3.2]: https://github.com/dokku/plugn/compare/v0.3.1...v0.3.2
-[0.3.1]: https://github.com/dokku/plugn/compare/v0.3.0...v0.3.1
-[0.3.0]: https://github.com/dokku/plugn/compare/v0.2.2...v0.3.0
-[0.2.2]: https://github.com/dokku/plugn/compare/v0.2.1...v0.2.2
-[0.2.1]: https://github.com/dokku/plugn/compare/v0.1.0...v0.2.1
-[0.1.0]: https://github.com/dokku/plugn/compare/ae7f4c92579ec64d7cf3d3bd76cb6207dd8d3ed9...v0.1.0
