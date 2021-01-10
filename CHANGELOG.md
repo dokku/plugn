@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.6.1](https://github.com/dokku/plugn/compare/v0.6.0...v0.6.1) - 2021-01-10
+
+### Changed
+
+- @josegonzalez Upgrade go-basher to add support for bash functions in the environment
+
 ## [0.6.0](https://github.com/dokku/plugn/compare/v0.5.1...v0.6.0) - 2020-12-20
 
 ### Changed

@@ -5,12 +5,12 @@ go 1.12
 require (
 	github.com/BurntSushi/toml v0.3.1
 	github.com/dokku/duplex v0.0.0-20160916172127-5bc6cb8042f7
-	github.com/google/uuid v1.1.2 // indirect
+	github.com/google/uuid v1.1.4 // indirect
 	github.com/kardianos/osext v0.0.0-20190222173326-2bc1f35cddc0 // indirect
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/pborman/uuid v1.2.1 // indirect
 	github.com/progrium/crypto v0.0.0-20141231035031-e04455474e32 // indirect
-	github.com/progrium/go-basher v0.0.0-20201220223148-fc6696b7d6bc
+	github.com/progrium/go-basher v0.0.0-20210110090515-9ffba79a02ab
 	github.com/progrium/plugin-demo v0.0.0-20160206152045-d94df2206a64
 	golang.org/x/crypto v0.0.0-20201203163018-be400aefbc4c // indirect
 )
