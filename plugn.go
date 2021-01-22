@@ -102,6 +102,10 @@ func main() {
 		"bashenv/plugn.bash",
 	}
 
+	if os.Getenv("TRACE") != "" {
+		os.Setenv("DEBUG", "1")
+	}
+
 	if os.Getenv("BASH_BIN") == "" {
 		basher.Application(funcs, scripts, Asset, true)
 	} else {
