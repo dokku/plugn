@@ -27,7 +27,6 @@ jobs:
     - run: |
         export CIRCLE_BRANCH="${GITHUB_REF##*/}"
         make build-in-docker
-        [[ -d build ]]  && sudo chown -R circleci:circleci build
     - run: make validate-in-docker
     - uses: actions/upload-artifact@v2
       with:
