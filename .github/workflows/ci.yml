@@ -15,26 +15,34 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - run: |
+    - name: Build env file
+      run: |
         export CIRCLE_BRANCH="${GITHUB_REF##*/}"
         make version
         if [[ "$CIRCLE_BRANCH" == "release" ]]; then
           export PACKAGECLOUD_REPOSITORY=dokku/dokku
           make .env.docker
         fi
-    - run: CIRCLE_BRANCH="${GITHUB_REF##*/}" make circleci
-    - run: CIRCLE_BRANCH="${GITHUB_REF##*/}" make build-docker-image
-    - run: |
+    - name: Prepare build env
+      run: CIRCLE_BRANCH="${GITHUB_REF##*/}" make circleci
+    - name: Create build image
+      run: CIRCLE_BRANCH="${GITHUB_REF##*/}" make build-docker-image
+    - name: Build binary
+      run: |
         export CIRCLE_BRANCH="${GITHUB_REF##*/}"
         make build-in-docker
-    - run: make validate-in-docker
-    - uses: actions/upload-artifact@v2
+    - name: Run tests
+      run: |
+        make validate-in-docker
+        build/linux/plugn version
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
       with:
         name: build
         path: build
-    - run: |
+    - name: Release artifacts
+      run: |
         export CIRCLE_BRANCH="${GITHUB_REF##*/}"
         if [[ "$CIRCLE_BRANCH" == "release" ]]; then
           make release-in-docker release-packagecloud-in-docker
         fi
-        build/linux/plugn version
