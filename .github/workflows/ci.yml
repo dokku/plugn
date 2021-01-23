@@ -47,7 +47,7 @@ jobs:
         first=$(ls -t /tmp/*bashenv* | head -n 1)
         echo "=====> bashenv $first file contents"
         sudo cat "$first"
-        rm -rf /tmp/*bashenv*
+        sudo rm -rf /tmp/*bashenv*
     - name: Run version test (sudo)
       run: |
         echo "=====> Copy binary"
@@ -63,7 +63,7 @@ jobs:
         first=$(ls -t /tmp/*bashenv* | head -n 1)
         echo "=====> bashenv $first file contents"
         sudo cat "$first"
-        rm -rf /tmp/*bashenv*
+        sudo rm -rf /tmp/*bashenv*
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
