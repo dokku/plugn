@@ -37,8 +37,9 @@ jobs:
         build/linux/plugn version
     - name: Run sudo test
       run: |
+        cp build/linux/plugn $PWD/user-plugn
         sudo useradd user
-        cp build/linux/plugn user-plugn
+        sudo chown user:user $PWD/user-plugn
         sudo -u user -E -H $PWD/user-plugn version
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
