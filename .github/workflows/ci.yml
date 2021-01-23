@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  pull_request:
+    branches:
+      - '*'
+  push:
+    branches:
+      - 'master'
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-16.04
+
+    steps:
+    - uses: actions/checkout@v2
+    - run: |
+        export CIRCLE_BRANCH="${GITHUB_REF##*/}"
+        make version
+        if [[ "$CIRCLE_BRANCH" == "release" ]]; then
+          export PACKAGECLOUD_REPOSITORY=dokku/dokku
+          make .env.docker
+        fi
+    - run: CIRCLE_BRANCH="${GITHUB_REF##*/}" make circleci
+    - run: CIRCLE_BRANCH="${GITHUB_REF##*/}" make build-docker-image
+    - run: |
+        export CIRCLE_BRANCH="${GITHUB_REF##*/}"
+        make build-in-docker
+        [[ -d build ]]  && sudo chown -R circleci:circleci build
+    - run: make validate-in-docker
+    - uses: actions/upload-artifact@v2
+      with:
+        name: build
+        path: build
+    - run: |
+        export CIRCLE_BRANCH="${GITHUB_REF##*/}"
+        if [[ "$CIRCLE_BRANCH" == "release" ]]; then
+          make release-in-docker release-packagecloud-in-docker
+        fi
