@@ -38,3 +38,4 @@ jobs:
         if [[ "$CIRCLE_BRANCH" == "release" ]]; then
           make release-in-docker release-packagecloud-in-docker
         fi
+        build/linux/plugn version
