@@ -37,9 +37,13 @@ jobs:
         build/linux/plugn version
     - name: Run sudo test
       run: |
+        echo "=====> Copy binary"
         cp build/linux/plugn $PWD/user-plugn
-        sudo useradd user
+        echo "=====> Create user"
+        sudo useradd -m -s /bin/bash user
+        echo "=====> Chown binary"
         sudo chown user:user $PWD/user-plugn
+        echo "=====> Execute binary"
         sudo -u user -E -H $PWD/user-plugn version
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
