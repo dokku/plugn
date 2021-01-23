@@ -35,6 +35,11 @@ jobs:
       run: |
         make validate-in-docker
         build/linux/plugn version
+    - name: Run sudo test
+      run: |
+        useradd user
+        cp build/linux/plugn user-plugn
+        sudo -u user -E -H user-plugn version
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
