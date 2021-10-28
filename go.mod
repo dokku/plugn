@@ -1,6 +1,6 @@
 module plugn
 
-go 1.12
+go 1.16
 
 require (
 	github.com/BurntSushi/toml v0.4.1
@@ -10,7 +10,7 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/pborman/uuid v1.2.1 // indirect
 	github.com/progrium/crypto v0.0.0-20141231035031-e04455474e32 // indirect
-	github.com/progrium/go-basher v0.0.0-20210110090515-9ffba79a02ab
+	github.com/progrium/go-basher v5.1.4+incompatible
 	github.com/progrium/plugin-demo v0.0.0-20160206152045-d94df2206a64
 	golang.org/x/crypto v0.0.0-20201203163018-be400aefbc4c // indirect
 )
