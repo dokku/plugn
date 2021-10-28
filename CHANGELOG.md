@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.7.1](https://github.com/dokku/plugn/compare/v0.7.0...v0.7.1) - 2021-10-28
+
+### Fixed
+
+- @josegonzalez Downgrade golang to avoid spurious SIGURG signals #58
+
 ## [0.7.0](https://github.com/dokku/plugn/compare/v0.6.1...v0.7.0) - 2021-10-27
 
 ### Added
