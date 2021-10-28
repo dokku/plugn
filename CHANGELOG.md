@@ -1,6 +1,18 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.7.0](https://github.com/dokku/plugn/compare/v0.6.1...v0.7.0) - 2021-10-27
+
+### Added
+
+- @adam12 Add bullseye to deb release task #55
+- @josegonzalez Add arm support #56
+
+### Changed
+
+- @dependabot-preview Upgrade to GitHub-native Dependabot 
+- @dependabot chore(deps): bump github.com/BurntSushi/toml from 0.3.1 to 0.4.1 #54
+
 ## [0.6.1](https://github.com/dokku/plugn/compare/v0.6.0...v0.6.1) - 2021-01-10
 
 ### Changed
