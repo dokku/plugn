@@ -158,7 +158,12 @@ bin/gh-release:
 	tar xf bin/gh-release.tgz -C bin
 	chmod +x bin/gh-release
 
-release: build bin/gh-release
+bin/gh-release-body:
+	mkdir -p bin
+	curl -o bin/gh-release-body "https://raw.githubusercontent.com/dokku/gh-release-body/master/gh-release-body"
+	chmod +x bin/gh-release-body
+
+release: build bin/gh-release bin/gh-release-body
 	rm -rf release && mkdir release
 	tar -zcf release/$(NAME)_$(VERSION)_linux_amd64.tgz -C build/linux $(NAME)-amd64
 	tar -zcf release/$(NAME)_$(VERSION)_linux_armhf.tgz -C build/linux $(NAME)-armhf
@@ -167,6 +172,7 @@ release: build bin/gh-release
 	cp build/deb/$(NAME)_$(VERSION)_armhf.deb release/$(NAME)_$(VERSION)_armhf.deb
 	cp build/rpm/$(NAME)-$(VERSION)-1.x86_64.rpm release/$(NAME)-$(VERSION)-1.x86_64.rpm
 	bin/gh-release create $(MAINTAINER)/$(REPOSITORY) $(VERSION) $(shell git rev-parse --abbrev-ref HEAD)
+	bin/gh-release-body $(MAINTAINER)/$(REPOSITORY) v$(VERSION)
 
 release-packagecloud:
 	@$(MAKE) release-packagecloud-deb
