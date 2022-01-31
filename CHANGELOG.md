@@ -1,6 +1,25 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.8.0](https://github.com/dokku/plugn/compare/v0.7.1...v0.8.0) - 2022-01-31
+
+### Added
+
+- @josegonzalez Update the release name and body after creation #60
+- @josegonzalez Add arm64 support #63
+- @josegonzalez Add dependabot for docker #64
+
+### Fixed
+
+- @josegonzalez Add jq to build environment #67
+
+### Changed
+
+- @josegonzalez Upgrade ci builder to ubuntu 20.04 #61
+- @josegonzalez Update dockerfile to newer base image #66
+- @dependabot chore(deps): bump github.com/BurntSushi/toml from 0.4.1 to 1.0.0 #62
+- @dependabot chore(deps): bump golang from 1.12.0-stretch to 1.17.6-stretch #65
+
 ## [0.7.1](https://github.com/dokku/plugn/compare/v0.7.0...v0.7.1) - 2021-10-28
 
 ### Fixed
