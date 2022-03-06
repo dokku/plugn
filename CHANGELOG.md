@@ -1,6 +1,16 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.8.1](https://github.com/dokku/plugn/compare/v0.8.0...v0.8.1) - 2022-03-05
+
+### Added
+
+- @RyanGaudion Add Raspbian Bullseye #70
+
+### Changed
+
+- @dependabot chore(deps): bump golang from 1.17.6-buster to 1.17.7-buster #69
+
 ## [0.8.0](https://github.com/dokku/plugn/compare/v0.7.1...v0.8.0) - 2022-01-31
 
 ### Added
