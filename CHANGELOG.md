@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.8.2](https://github.com/dokku/plugn/compare/v0.8.1...v0.8.2) - 2022-03-05
+
+### Changed
+
+- @RyanGaudion Switch to golang 1.13 to fix SIGURG issue #74
+
 ## [0.8.1](https://github.com/dokku/plugn/compare/v0.8.0...v0.8.1) - 2022-03-05
 
 ### Added
