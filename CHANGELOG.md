@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.9.1](https://github.com/dokku/plugn/compare/v0.9.0...v0.9.1) - 2022-05-10
+
+### Changed
+
+- @josegonzalez Revert "chore(deps): bump golang from 1.13.0-buster to 1.18.1-buster" #83
+
 ## [0.9.0](https://github.com/dokku/plugn/compare/v0.8.2...v0.9.0) - 2022-05-10
 
 ### Changed
