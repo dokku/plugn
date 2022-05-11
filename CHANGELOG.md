@@ -1,6 +1,18 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.9.0](https://github.com/dokku/plugn/compare/v0.8.2...v0.9.0) - 2022-05-10
+
+### Changed
+
+- #79 @dependabot chore(deps): bump github.com/BurntSushi/toml from 1.0.0 to 1.1.0
+- #80 @dependabot  chore(deps): bump golang from 1.13.0-buster to 1.18.1-buster
+
+### Added
+
+- #77 @josegonzalez Publish armhf package to ubuntu/focal
+- #81 @josegonzalez Publish package for Ubuntu 22.04
+
 ## [0.8.2](https://github.com/dokku/plugn/compare/v0.8.1...v0.8.2) - 2022-03-05
 
 ### Changed

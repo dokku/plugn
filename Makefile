@@ -5,7 +5,7 @@ MAINTAINER_NAME = Jose Diaz-Gonzalez
 REPOSITORY = plugn
 HARDWARE = $(shell uname -m)
 SYSTEM_NAME  = $(shell uname -s | tr '[:upper:]' '[:lower:]')
-BASE_VERSION ?= 0.8.2
+BASE_VERSION ?= 0.9.0
 IMAGE_NAME ?= $(MAINTAINER)/$(REPOSITORY)
 PACKAGECLOUD_REPOSITORY ?= dokku/dokku-betafish
 
@@ -211,10 +211,14 @@ release-packagecloud:
 release-packagecloud-deb: build/deb/$(NAME)_$(VERSION)_amd64.deb build/deb/$(NAME)_$(VERSION)_arm64.deb build/deb/$(NAME)_$(VERSION)_armhf.deb
 	package_cloud push $(PACKAGECLOUD_REPOSITORY)/ubuntu/bionic  build/deb/$(NAME)_$(VERSION)_amd64.deb
 	package_cloud push $(PACKAGECLOUD_REPOSITORY)/ubuntu/focal   build/deb/$(NAME)_$(VERSION)_amd64.deb
+	package_cloud push $(PACKAGECLOUD_REPOSITORY)/ubuntu/jammy   build/deb/$(NAME)_$(VERSION)_amd64.deb
 	package_cloud push $(PACKAGECLOUD_REPOSITORY)/debian/stretch build/deb/$(NAME)_$(VERSION)_amd64.deb
 	package_cloud push $(PACKAGECLOUD_REPOSITORY)/debian/buster  build/deb/$(NAME)_$(VERSION)_amd64.deb
 	package_cloud push $(PACKAGECLOUD_REPOSITORY)/debian/bullseye build/deb/$(NAME)_$(VERSION)_amd64.deb
 	package_cloud push $(PACKAGECLOUD_REPOSITORY)/ubuntu/focal    build/deb/$(NAME)_$(VERSION)_arm64.deb
+	package_cloud push $(PACKAGECLOUD_REPOSITORY)/ubuntu/jammy    build/deb/$(NAME)_$(VERSION)_arm64.deb
+	package_cloud push $(PACKAGECLOUD_REPOSITORY)/ubuntu/focal    build/deb/$(NAME)_$(VERSION)_armhf.deb
+	package_cloud push $(PACKAGECLOUD_REPOSITORY)/ubuntu/jammy    build/deb/$(NAME)_$(VERSION)_armhf.deb
 	package_cloud push $(PACKAGECLOUD_REPOSITORY)/raspbian/buster build/deb/$(NAME)_$(VERSION)_armhf.deb
 	package_cloud push $(PACKAGECLOUD_REPOSITORY)/raspbian/bullseye build/deb/$(NAME)_$(VERSION)_armhf.deb
 
@@ -243,8 +247,8 @@ validate: test
 	sha1sum build/rpm/$(NAME)-$(VERSION)-1.x86_64.rpm
 
 prebuild:
-	cd / && go get -u github.com/jteeuwen/go-bindata/...
-	cd / && go get -u github.com/progrium/basht/...
+	cd / && go install github.com/jteeuwen/go-bindata/...@latest
+	cd / && go install github.com/progrium/basht/...@latest
 
 test: prebuild docker-image
 	basht tests/*/tests.sh
