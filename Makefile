@@ -247,7 +247,7 @@ validate: test
 	sha1sum build/rpm/$(NAME)-$(VERSION)-1.x86_64.rpm
 
 prebuild:
-	cd / && go install github.com/jteeuwen/go-bindata/...@latest
+	cd / && go install github.com/go-bindata/go-bindata/...@latest
 	cd / && go install github.com/progrium/basht/...@latest
 
 test: prebuild docker-image
