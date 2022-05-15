@@ -82,8 +82,10 @@ trigger() {
 	declare hook="$1"; shift
 	shopt -s nullglob
 	for plugin in $PLUGIN_PATH/enabled/*; do
-		eval "$(config-export $(basename $plugin))"
-  		[[ -x "$plugin/$hook" ]] && $plugin/$hook "$@"
+		if [[ -x "$plugin/$hook" ]]; then
+			eval "$(config-export $(basename $plugin))"
+			$plugin/$hook "$@"
+		fi
 	done
 	shopt -u nullglob
 	trigger-gateway $hook "$@"
