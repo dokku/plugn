@@ -5,7 +5,7 @@ MAINTAINER_NAME = Jose Diaz-Gonzalez
 REPOSITORY = plugn
 HARDWARE = $(shell uname -m)
 SYSTEM_NAME  = $(shell uname -s | tr '[:upper:]' '[:lower:]')
-BASE_VERSION ?= 0.9.1
+BASE_VERSION ?= 0.10.0
 IMAGE_NAME ?= $(MAINTAINER)/$(REPOSITORY)
 PACKAGECLOUD_REPOSITORY ?= dokku/dokku-betafish
 
@@ -247,8 +247,8 @@ validate: test
 	sha1sum build/rpm/$(NAME)-$(VERSION)-1.x86_64.rpm
 
 prebuild:
-	cd / && go get -u github.com/jteeuwen/go-bindata/...
-	cd / && go get -u github.com/progrium/basht/...
+	cd / && go install github.com/go-bindata/go-bindata/...@latest
+	cd / && go install github.com/progrium/basht/...@latest
 
 test: prebuild docker-image
 	basht tests/*/tests.sh
