@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.10.0](https://github.com/dokku/plugn/compare/v0.9.1...v0.10.0) - 2022-05-15
+
+### Changed
+
+- @josegonzalez Increase speed of performing plugn trigger #86
+
 ## [0.9.1](https://github.com/dokku/plugn/compare/v0.9.0...v0.9.1) - 2022-05-10
 
 ### Changed
