@@ -1,6 +1,12 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.11.0](https://github.com/dokku/plugn/compare/v0.10.0...v0.11.0) - 2022-05-16
+
+### Changed
+
+- @josegonzalez upgrade go-basher to silence errant exit status log messages
+
 ## [0.10.0](https://github.com/dokku/plugn/compare/v0.9.1...v0.10.0) - 2022-05-15
 
 ### Changed
