@@ -49,6 +49,7 @@ update() {
 	declare plugin="$1" committish="$2"
 	[[ ! -d "$PLUGIN_PATH/available/$plugin" ]] && echo "Plugin ($plugin) not installed" && exit 1
 	pushd "$PLUGIN_PATH/available/$plugin" &>/dev/null
+	[[ ! -d ".git" ]] && echo "Plugin ($plugin) not managed by git" && exit 0
 	[[ -z "$committish" ]] && [[ ! $(git symbolic-ref HEAD) ]] && echo "Plugin pinned to $(< ./.plugin_committish)" && exit 0
 	git checkout master &> /dev/null
 	git pull &> /dev/null
