@@ -88,9 +88,13 @@ trigger() {
 	declare hook="$1"; shift
 	shopt -s nullglob
 	for plugin in $PLUGIN_PATH/enabled/*; do
-		if [[ -x "$plugin/$hook" ]]; then
-			eval "$(config-export $(basename $plugin))"
-			$plugin/$hook "$@"
+		if [[ -f "$plugin/$hook" ]]; then
+			if [[ -x "$plugin/$hook" ]]; then
+				eval "$(config-export $(basename $plugin))"
+				$plugin/$hook "$@"
+			else
+				echo "Trigger '$hook' is not executable, skipping plugin ($(basename $plugin))" 1>&2
+			fi
 		fi
 	done
 	shopt -u nullglob
