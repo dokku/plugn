@@ -1,6 +1,18 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.12.0](https://github.com/dokku/plugn/compare/v0.11.0...v0.12.0) - 2022-05-19
+
+### Fixed
+
+- @josegonzalez Ignore plugins that do not have a .git directory when performing updates #90
+- @josegonzalez Add the plugin to the safe.directory list #92
+
+### Changed
+
+- @josegonzalez Do not require PLUGIN_PATH to fetch version #91
+- @josegonzalez Log when a plugin trigger is not executable #93
+
 ## [0.11.0](https://github.com/dokku/plugn/compare/v0.10.0...v0.11.0) - 2022-05-16
 
 ### Changed
