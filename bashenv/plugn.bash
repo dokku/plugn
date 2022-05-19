@@ -49,6 +49,12 @@ update() {
 	declare plugin="$1" committish="$2"
 	[[ ! -d "$PLUGIN_PATH/available/$plugin" ]] && echo "Plugin ($plugin) not installed" && exit 1
 	pushd "$PLUGIN_PATH/available/$plugin" &>/dev/null
+	[[ ! -d ".git" ]] && echo "Plugin ($plugin) not managed by git" && exit 0
+
+	if ! git config --global --get-all safe.directory | grep -q "$PLUGIN_PATH/available/$plugin"; then
+		git config --global --add safe.directory "$PLUGIN_PATH/available/$plugin"
+	fi
+
 	[[ -z "$committish" ]] && [[ ! $(git symbolic-ref HEAD) ]] && echo "Plugin pinned to $(< ./.plugin_committish)" && exit 0
 	git checkout master &> /dev/null
 	git pull &> /dev/null
@@ -82,9 +88,13 @@ trigger() {
 	declare hook="$1"; shift
 	shopt -s nullglob
 	for plugin in $PLUGIN_PATH/enabled/*; do
-		if [[ -x "$plugin/$hook" ]]; then
-			eval "$(config-export $(basename $plugin))"
-			$plugin/$hook "$@"
+		if [[ -f "$plugin/$hook" ]]; then
+			if [[ -x "$plugin/$hook" ]]; then
+				eval "$(config-export $(basename $plugin))"
+				$plugin/$hook "$@"
+			else
+				echo "Trigger '$hook' is not executable, skipping plugin ($(basename $plugin))" 1>&2
+			fi
 		fi
 	done
 	shopt -u nullglob
