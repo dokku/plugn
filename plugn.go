@@ -68,6 +68,10 @@ func TomlSet(args []string) {
 	f.Close()
 }
 
+func isArg(argument string) bool {
+	return len(os.Args) > 1 && os.Args[1] == argument
+}
+
 func main() {
 	os.Setenv("PLUGN_VERSION", Version)
 	if data, err := ioutil.ReadFile(".plugn"); err == nil {
@@ -75,12 +79,12 @@ func main() {
 			os.Setenv("PLUGIN_PATH", path)
 		}
 	}
-	if os.Getenv("PLUGIN_PATH") == "" {
+	if !isArg("version") && os.Getenv("PLUGIN_PATH") == "" {
 		fmt.Println("!! PLUGIN_PATH is not set in environment")
 		os.Exit(2)
 	}
 	PluginPath = os.Getenv("PLUGIN_PATH")
-	if len(os.Args) > 1 && os.Args[1] == "gateway" {
+	if isArg("gateway") {
 		runGateway()
 		return
 	}
