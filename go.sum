@@ -1,5 +1,5 @@
-github.com/BurntSushi/toml v1.1.0 h1:ksErzDEI1khOiGPgpwuI7x2ebx/uXQNw7xJpn9Eq1+I=
-github.com/BurntSushi/toml v1.1.0/go.mod h1:CxXYINrC8qIiEnFrOxCa7Jy5BFHlXnUU2pbicEuybxQ=
+github.com/BurntSushi/toml v1.2.0 h1:Rt8g24XnyGTyglgET/PRUNlrUeu9F5L+7FilkXfZgs0=
+github.com/BurntSushi/toml v1.2.0/go.mod h1:CxXYINrC8qIiEnFrOxCa7Jy5BFHlXnUU2pbicEuybxQ=
 github.com/dokku/duplex v0.0.0-20160916172127-5bc6cb8042f7 h1:BBMM8QczgTcNTM6axgZA2pdR5SG0eePSh2GeOLpkgRw=
 github.com/dokku/duplex v0.0.0-20160916172127-5bc6cb8042f7/go.mod h1:FagtW/LftfcKQuBjdmKHdhxCbTU7Gdv87BIOQ6dgAk4=
 github.com/google/uuid v1.0.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
@@ -13,8 +13,6 @@ github.com/pborman/uuid v1.2.1 h1:+ZZIw58t/ozdjRaXh/3awHfmWRbzYxJoAdNJxe/3pvw=
 github.com/pborman/uuid v1.2.1/go.mod h1:X/NO0urCmaxf9VXbdlT7C2Yzkj2IKimNn4k+gtPdI/k=
 github.com/progrium/crypto v0.0.0-20141231035031-e04455474e32 h1:TazRiCelU8NoJMn2z0/RIzv4lUUkp5YwAunbjUsODHQ=
 github.com/progrium/crypto v0.0.0-20141231035031-e04455474e32/go.mod h1:spjB7wUvxDfIjoK9jtlCu07B/QaZwjtKlQeM3njS9QA=
-github.com/progrium/go-basher v5.1.5+incompatible h1:gImkc9PLBdKRlSHYfY3A+NzPvA9i0c3TwJQt56hwCzo=
-github.com/progrium/go-basher v5.1.5+incompatible/go.mod h1:Oiy7jZEU1mm+gI1dt5MKYwxptmD37q8/UupxnwhMHtI=
 github.com/progrium/go-basher v5.1.6+incompatible h1:4C9YrvISyUN01W2gEruN1EzMecc75NDiHUjipKuOqls=
 github.com/progrium/go-basher v5.1.6+incompatible/go.mod h1:Oiy7jZEU1mm+gI1dt5MKYwxptmD37q8/UupxnwhMHtI=
 github.com/progrium/plugin-demo v0.0.0-20160206152045-d94df2206a64 h1:FHNCTel7Yt0+4I1uvKfu2X+g8U8tHBBJb7zl+ohfmqM=
