@@ -49,7 +49,6 @@ build: prebuild
 	@$(MAKE) build/deb/$(NAME)_$(VERSION)_amd64.deb
 	@$(MAKE) build/deb/$(NAME)_$(VERSION)_arm64.deb
 	@$(MAKE) build/deb/$(NAME)_$(VERSION)_armhf.deb
-	@$(MAKE) build/rpm/$(NAME)-$(VERSION)-1.x86_64.rpm
 
 build-docker-image:
 	docker build --rm -q -f Dockerfile.build -t $(IMAGE_NAME):build .
@@ -148,27 +147,6 @@ build/deb/$(NAME)_$(VERSION)_armhf.deb: build/linux/$(NAME)-armhf
 		build/linux/$(NAME)-armhf=/usr/bin/$(NAME) \
 		LICENSE=/usr/share/doc/$(NAME)/copyright
 
-build/rpm/$(NAME)-$(VERSION)-1.x86_64.rpm: build/linux/$(NAME)-amd64
-	export SOURCE_DATE_EPOCH=$(shell git log -1 --format=%ct) \
-		&& mkdir -p build/rpm \
-		&& fpm \
-		--architecture x86_64 \
-		--category utils \
-		--description "$$PACKAGE_DESCRIPTION" \
-		--input-type dir \
-		--license 'MIT License' \
-		--maintainer "$(MAINTAINER_NAME) <$(EMAIL)>" \
-		--name $(NAME) \
-		--output-type rpm \
-		--package build/rpm/$(NAME)-$(VERSION)-1.x86_64.rpm \
-		--rpm-os linux \
-		--url "https://github.com/$(MAINTAINER)/$(REPOSITORY)" \
-		--vendor "" \
-		--version $(VERSION) \
-		--verbose \
-		build/linux/$(NAME)-amd64=/usr/bin/$(NAME) \
-		LICENSE=/usr/share/doc/$(NAME)/copyright
-
 clean:
 	rm -rf build release validation
 
@@ -200,13 +178,11 @@ release: build bin/gh-release bin/gh-release-body
 	cp build/deb/$(NAME)_$(VERSION)_amd64.deb release/$(NAME)_$(VERSION)_amd64.deb
 	cp build/deb/$(NAME)_$(VERSION)_arm64.deb release/$(NAME)_$(VERSION)_arm64.deb
 	cp build/deb/$(NAME)_$(VERSION)_armhf.deb release/$(NAME)_$(VERSION)_armhf.deb
-	cp build/rpm/$(NAME)-$(VERSION)-1.x86_64.rpm release/$(NAME)-$(VERSION)-1.x86_64.rpm
 	bin/gh-release create $(MAINTAINER)/$(REPOSITORY) $(VERSION) $(shell git rev-parse --abbrev-ref HEAD)
 	bin/gh-release-body $(MAINTAINER)/$(REPOSITORY) v$(VERSION)
 
 release-packagecloud:
 	@$(MAKE) release-packagecloud-deb
-	@$(MAKE) release-packagecloud-rpm
 
 release-packagecloud-deb: build/deb/$(NAME)_$(VERSION)_amd64.deb build/deb/$(NAME)_$(VERSION)_arm64.deb build/deb/$(NAME)_$(VERSION)_armhf.deb
 	package_cloud push $(PACKAGECLOUD_REPOSITORY)/ubuntu/bionic  build/deb/$(NAME)_$(VERSION)_amd64.deb
@@ -223,9 +199,6 @@ release-packagecloud-deb: build/deb/$(NAME)_$(VERSION)_amd64.deb build/deb/$(NAM
 	package_cloud push $(PACKAGECLOUD_REPOSITORY)/raspbian/buster build/deb/$(NAME)_$(VERSION)_armhf.deb
 	package_cloud push $(PACKAGECLOUD_REPOSITORY)/raspbian/bullseye build/deb/$(NAME)_$(VERSION)_armhf.deb
 
-release-packagecloud-rpm: build/rpm/$(NAME)-$(VERSION)-1.x86_64.rpm
-	package_cloud push $(PACKAGECLOUD_REPOSITORY)/el/7           build/rpm/$(NAME)-$(VERSION)-1.x86_64.rpm
-
 validate: test
 	mkdir -p validation
 	lintian build/deb/$(NAME)_$(VERSION)_amd64.deb || true
@@ -240,12 +213,10 @@ validate: test
 	cd validation && ar -x ../build/deb/$(NAME)_$(VERSION)_amd64.deb
 	cd validation && ar -x ../build/deb/$(NAME)_$(VERSION)_arm64.deb
 	cd validation && ar -x ../build/deb/$(NAME)_$(VERSION)_armhf.deb
-	cd validation && rpm2cpio ../build/rpm/$(NAME)-$(VERSION)-1.x86_64.rpm > $(NAME)-$(VERSION)-1.x86_64.cpio
-	ls -lah build/deb build/rpm validation
+	ls -lah build/deb validation
 	sha1sum build/deb/$(NAME)_$(VERSION)_amd64.deb
 	sha1sum build/deb/$(NAME)_$(VERSION)_arm64.deb
 	sha1sum build/deb/$(NAME)_$(VERSION)_armhf.deb
-	sha1sum build/rpm/$(NAME)-$(VERSION)-1.x86_64.rpm
 
 prebuild:
 	git config --global --add safe.directory $(shell pwd)
