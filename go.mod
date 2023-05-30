@@ -3,7 +3,7 @@ module plugn
 go 1.18
 
 require (
-	github.com/BurntSushi/toml v1.2.1
+	github.com/BurntSushi/toml v1.3.0
 	github.com/dokku/duplex v0.0.0-20160916172127-5bc6cb8042f7
 	github.com/progrium/go-basher v5.1.6+incompatible
 	github.com/progrium/plugin-demo v0.0.0-20160206152045-d94df2206a64
