@@ -1,6 +1,42 @@
 # Change Log
 All notable changes to this project will be documented in this file.
 
+## [0.13.0](https://github.com/dokku/plugn/compare/v0.12.0...v0.13.0) - 2023-08-06
+
+### Added
+
+- #126 @Coffee2CodeNL: Add Bookworm Support
+- #95 @josegonzalez: feat: add support for raspbian/bullseye on arm64 architectures
+- #96 @josegonzalez: Add support for raspbian/bullseye on arm64 architectures
+
+### Changed
+
+- #97 @josegonzalez: Publish arm64 packages for debian instead of raspbian
+- #98 @dependabot: chore(deps): bump golang from 1.18.2-buster to 1.18.3-buster
+- #100 @dependabot: chore(deps): bump github.com/BurntSushi/toml from 1.1.0 to 1.2.0
+- #105 @dependabot: chore(deps): bump github.com/BurntSushi/toml from 1.2.0 to 1.2.1
+- #107 @dependabot: chore(deps): bump golang from 1.18.3-buster to 1.19.4-buster
+- #108 @josegonzalez: Update all workflows
+- #110 @dependabot: chore(deps): bump actions/upload-artifact from 2 to 3
+- #111 @dependabot: chore(deps): bump github/codeql-action from 1 to 2
+- #112 @dependabot: chore(deps): bump actions/checkout from 2 to 3
+- #113 @dependabot: chore(deps): bump golang from 1.19.4-buster to 1.19.5-buster
+- #115 @dependabot: chore(deps): bump golang from 1.19.5-buster to 1.20.0-buster
+- #117 @dependabot: chore(deps): bump golang.org/x/crypto from 0.0.0-20201203163018-be400aefbc4c to 0.1.0
+- #119 @dependabot: chore(deps): bump golang from 1.20.0-buster to 1.20.3-buster
+- #121 @dependabot: chore(deps): bump golang from 1.20.3-buster to 1.20.4-buster
+- #123 @dependabot: chore(deps): bump github.com/BurntSushi/toml from 1.2.1 to 1.3.1
+- #124 @dependabot: chore(deps): bump golang from 1.20.4-buster to 1.20.5-buster
+- #125 @dependabot: chore(deps): bump github.com/BurntSushi/toml from 1.3.1 to 1.3.2
+
+### Fixed
+
+- #109 @josegonzalez: Ensure we can run git commands from mounted docker volumes
+
+### Removed
+
+- #114 @josegonzalez: Drop rpm support
+
 ## [0.12.0](https://github.com/dokku/plugn/compare/v0.11.0...v0.12.0) - 2022-05-19
 
 ### Fixed
