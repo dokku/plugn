@@ -15,5 +15,5 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/pborman/uuid v1.2.1 // indirect
 	github.com/progrium/crypto v0.0.0-20141231035031-e04455474e32 // indirect
-	golang.org/x/crypto v0.1.0 // indirect
+	golang.org/x/crypto v0.17.0 // indirect
 )

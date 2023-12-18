@@ -17,7 +17,7 @@ github.com/progrium/go-basher v5.1.6+incompatible h1:4C9YrvISyUN01W2gEruN1EzMecc
 github.com/progrium/go-basher v5.1.6+incompatible/go.mod h1:Oiy7jZEU1mm+gI1dt5MKYwxptmD37q8/UupxnwhMHtI=
 github.com/progrium/plugin-demo v0.0.0-20160206152045-d94df2206a64 h1:FHNCTel7Yt0+4I1uvKfu2X+g8U8tHBBJb7zl+ohfmqM=
 github.com/progrium/plugin-demo v0.0.0-20160206152045-d94df2206a64/go.mod h1:xwVfSlPMRhFysvnn0lOZ1Ruen2jTuzgwm4Hs0onTrlY=
-golang.org/x/crypto v0.1.0 h1:MDRAIl0xIo9Io2xV565hzXHw3zVseKrJKodhohM5CjU=
-golang.org/x/crypto v0.1.0/go.mod h1:RecgLatLF4+eUMCP1PoPZQb+cVrJcOPbHkTkbkB9sbw=
-golang.org/x/sys v0.1.0 h1:kunALQeHf1/185U1i0GOB/fy1IPRDDpuoOOqRReG57U=
-golang.org/x/term v0.1.0 h1:g6Z6vPFA9dYBAF7DWcH6sCcOntplXsDKcliusYijMlw=
+golang.org/x/crypto v0.17.0 h1:r8bRNjWL3GshPW3gkd+RpvzWrZAwPS49OmTGZ/uhM4k=
+golang.org/x/crypto v0.17.0/go.mod h1:gCAAfMLgwOJRpTjQ2zCCt2OcSfYMTeZVSRtQlPC7Nq4=
+golang.org/x/sys v0.15.0 h1:h48lPFYpsTvQJZF4EKyI4aLHaev3CxivZmv7yZig9pc=
+golang.org/x/term v0.15.0 h1:y/Oo/a/q3IXu26lQgl04j/gjuBDOBlx7X6Om1j2CPW4=
