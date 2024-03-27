@@ -181,7 +181,6 @@ validate: test
 prebuild:
 	git config --global --add safe.directory $(shell pwd)
 	git status
-	cd / && go install github.com/go-bindata/go-bindata/...@latest
 	cd / && go install github.com/progrium/basht/...@latest
 
 test: prebuild docker-image
