@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"os"
 	"path/filepath"
@@ -22,7 +22,7 @@ func assert(err error) {
 }
 
 func TomlGet(args []string) {
-	bytes, err := ioutil.ReadAll(os.Stdin)
+	bytes, err := io.ReadAll(os.Stdin)
 	assert(err)
 	var t map[string]interface{}
 	_, err = toml.Decode(string(bytes), &t)
@@ -32,7 +32,7 @@ func TomlGet(args []string) {
 
 func TomlExport(args []string) {
 	plugin := args[0]
-	bytes, err := ioutil.ReadAll(os.Stdin)
+	bytes, err := io.ReadAll(os.Stdin)
 	assert(err)
 
 	var c map[string]map[string]string
@@ -53,7 +53,7 @@ func TomlExport(args []string) {
 }
 
 func TomlSet(args []string) {
-	bytes, err := ioutil.ReadAll(os.Stdin)
+	bytes, err := io.ReadAll(os.Stdin)
 	assert(err)
 	var t map[string]map[string]string
 	_, err = toml.DecodeFile(args[0], &t)
@@ -74,7 +74,7 @@ func isArg(argument string) bool {
 
 func main() {
 	os.Setenv("PLUGN_VERSION", Version)
-	if data, err := ioutil.ReadFile(".plugn"); err == nil {
+	if data, err := os.ReadFile(".plugn"); err == nil {
 		if path, err := filepath.Abs(string(data)); err == nil {
 			os.Setenv("PLUGIN_PATH", path)
 		}

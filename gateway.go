@@ -2,7 +2,6 @@ package main
 
 import (
 	"io"
-	"io/ioutil"
 	"log"
 	"os"
 	"os/signal"
@@ -42,7 +41,7 @@ func runGateway() {
 
 func findPlugins() []string {
 	var plugins []string
-	enabled, err := ioutil.ReadDir(PluginPath + "/enabled")
+	enabled, err := os.ReadDir(PluginPath + "/enabled")
 	if err != nil {
 		log.Println(err)
 		return []string{}
