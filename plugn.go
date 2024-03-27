@@ -1,6 +1,7 @@
 package main
 
 import (
+	"embed"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -14,6 +15,15 @@ import (
 
 var Version string
 var PluginPath string
+
+var (
+	//go:embed bashenv/*
+	fs embed.FS
+)
+
+func Asset(name string) ([]byte, error) {
+	return fs.ReadFile(filepath.ToSlash(name))
+}
 
 func assert(err error) {
 	if err != nil {
