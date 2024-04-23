@@ -82,7 +82,7 @@ T_plugn-uninstall() {
 T_plugn-update() {
 	local -A repos=(
 		[master]="https://github.com/dokku/smoke-test-plugin"
-		[main]="https://github.com/killjoy1221/smoke-test-plugin-using-main"
+		[main]="https://github.com/dokku/smoke-test-plugin-main"
 	)
 	for key in "${!repos[@]}"; do
 		local repo="${repos[$key]}"
