@@ -4,11 +4,10 @@ name: CI
 on:
   pull_request:
     branches:
-      - '*'
+      - "*"
   push:
     branches:
-      - 'master'
-      - 'release'
+      - "main"
 
 jobs:
   build:
@@ -21,24 +20,24 @@ jobs:
       PACKAGECLOUD_TOKEN: ${{ secrets.PACKAGECLOUD_TOKEN }}
 
     steps:
-    - uses: actions/checkout@v4
-    - name: make version
-      run: |
-        make version .env.docker
-    - run: make ci-report
-    - run: make build-docker-image
-    - run: make build-in-docker
-    - run: make validate-in-docker
-    - name: upload packages
-      uses: actions/upload-artifact@v4
-      with:
-        name: build
-        path: build/**/*
-    - name: make release-in-docker
-      run: |
-        if [[ "${GITHUB_REF#refs/heads/}" == "release" ]]; then
-          export CI_BRANCH=${GITHUB_REF#refs/heads/}
-          export PACKAGECLOUD_REPOSITORY=dokku/dokku
-          rm .env.docker
-          make .env.docker release-in-docker release-packagecloud-in-docker
-        fi
+      - uses: actions/checkout@v4
+      - name: make version
+        run: |
+          make version .env.docker
+      - run: make ci-report
+      - run: make build-docker-image
+      - run: make build-in-docker
+      - run: make validate-in-docker
+      - name: upload packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: build
+          path: build/**/*
+      - name: make release-in-docker
+        run: |
+          if [[ "${GITHUB_REF#refs/heads/}" == "release" ]]; then
+            export CI_BRANCH=${GITHUB_REF#refs/heads/}
+            export PACKAGECLOUD_REPOSITORY=dokku/dokku
+            rm .env.docker
+            make .env.docker release-in-docker release-packagecloud-in-docker
+          fi

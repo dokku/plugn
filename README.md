@@ -1,4 +1,4 @@
-# plugn [![Build Status](https://img.shields.io/circleci/project/dokku/plugn/master.svg?style=flat-square "Build Status")](https://circleci.com/gh/dokku/plugn/tree/master)
+# plugn
 
 Hook system that lets users extend your application with plugins
 
@@ -10,6 +10,7 @@ tar xzf /tmp/plugn_latest.tgz -C /usr/local/bin
 ```
 
 ## Usage
+
 ```
 $ PLUGIN_PATH=/var/lib/dokku/plugins plugn
 
@@ -29,14 +30,16 @@ Available commands:
 ```
 
 ## Building & Testing (in docker)
+
 ```
-$ docker-machine create -d virtualbox plugn-dev
-$ eval $(docker-machine env plugn-dev)
-$ make build-in-docker
-$ make test
+docker-machine create -d virtualbox plugn-dev
+eval $(docker-machine env plugn-dev)
+make build-in-docker
+make test
 ```
 
 ## Plugin directory structure example
+
 ```
 ps (plugin name)
 ├── [-rw-r--r--]  plugin.toml (metadata)
@@ -46,6 +49,7 @@ ps (plugin name)
 ```
 
 ## plugin.toml format example
+
 ```
 [plugin name]
 description = "plugin description"
@@ -54,7 +58,7 @@ version = "0.1.0"
 
 ## Releases
 
-Anybody can propose a release. First bump the version in `Makefile`, make sure `CHANGELOG.md` is up to date, and make sure tests are passing. Then open a Pull Request from `master` into the `release` branch. Once a maintainer approves and merges, CircleCI will build a release and upload it to Github.
+Anybody can propose a release. First bump the version in `Makefile`, make sure `CHANGELOG.md` is up to date, and make sure tests are passing. Then open a Pull Request from `main` into the `release` branch. Once a maintainer approves and merges, CircleCI will build a release and upload it to Github.
 
 ## License
 
