@@ -80,22 +80,25 @@ T_plugn-uninstall() {
 }
 
 T_plugn-update() {
-	local -A repos=(
-		[master]="https://github.com/dokku/smoke-test-plugin"
-		[main]="https://github.com/dokku/smoke-test-plugin-main"
-	)
-	for key in "${!repos[@]}"; do
-		local repo="${repos[$key]}"
-		local name="${repo##*/}"
-		plugn-test-pass "test-update-$key" "
-			plugn init && \
-			plugn install $repo && \
-			plugn list | grep $name && \
-			plugn update $name v0.2.0 && \
-			plugn list | grep $name | grep 0.2.0 && \
-			plugn update $name testing-branch-do-not-delete && \
-			plugn list | grep $name | grep 0.3.0-testing"
-	done
+	plugn-test-pass "test-update" "
+		plugn init && \
+		plugn install https://github.com/dokku/smoke-test-plugin && \
+		plugn list | grep smoke-test-plugin && \
+		plugn update smoke-test-plugin v0.2.0 && \
+		plugn list | grep smoke-test-plugin | grep 0.2.0 && \
+		plugn update smoke-test-plugin testing-branch-do-not-delete && \
+		plugn list | grep smoke-test-plugin | grep 0.3.0-testing"
+}
+
+T_plugn-update-main() {
+	plugn-test-pass "test-update-main" "
+		plugn init && \
+		plugn install https://github.com/dokku/smoke-test-plugin-main && \
+		plugn list | grep smoke-test-plugin-main && \
+		plugn update smoke-test-plugin-main v0.2.0 && \
+		plugn list | grep smoke-test-plugin-main | grep 0.2.0 && \
+		plugn update smoke-test-plugin-main main && \
+		plugn list | grep smoke-test-plugin-main | grep 0.9.0"
 }
 
 T_plugn-version() {
