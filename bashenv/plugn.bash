@@ -56,15 +56,15 @@ update() {
 	fi
 
 	[[ -z "$committish" ]] && [[ ! $(git symbolic-ref HEAD) ]] && echo "Plugin pinned to $(< ./.plugin_committish)" && exit 0
-	git checkout master &> /dev/null
-	git pull &> /dev/null
-	git checkout - &> /dev/null
+	git fetch &> /dev/null
 	if [[ -n "$committish" ]]; then
 		git fetch --tags &> /dev/null
-		git checkout $committish &> /dev/null
+		git checkout "$committish" &> /dev/null
+		git pull &> /dev/null || true # in case of branches
 		echo "$committish" > ./.plugin_committish
 		echo "Plugin ($plugin) updated and pinned to $committish"
 	else
+		git pull &> /dev/null
 		echo "Plugin ($plugin) updated"
 	fi
 	popd &> /dev/null

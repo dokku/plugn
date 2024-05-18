@@ -90,6 +90,17 @@ T_plugn-update() {
 		plugn list | grep smoke-test-plugin | grep 0.3.0-testing"
 }
 
+T_plugn-update-main() {
+	plugn-test-pass "test-update-main" "
+		plugn init && \
+		plugn install https://github.com/dokku/smoke-test-plugin-main && \
+		plugn list | grep smoke-test-plugin-main && \
+		plugn update smoke-test-plugin-main v0.2.0 && \
+		plugn list | grep smoke-test-plugin-main | grep 0.2.0 && \
+		plugn update smoke-test-plugin-main main && \
+		plugn list | grep smoke-test-plugin-main | grep 0.9.0"
+}
+
 T_plugn-version() {
 	plugn-test-pass "test-version" "
 		plugn init && \
