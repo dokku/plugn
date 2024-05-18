@@ -60,7 +60,7 @@ update() {
 	if [[ -n "$committish" ]]; then
 		git fetch --tags &> /dev/null
 		git checkout "$committish" &> /dev/null
-		git pull &> /dev/null # in case of branches
+		git pull &> /dev/null || true # in case of branches
 		echo "$committish" > ./.plugin_committish
 		echo "Plugin ($plugin) updated and pinned to $committish"
 	else
