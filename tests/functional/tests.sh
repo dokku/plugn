@@ -59,6 +59,12 @@ T_plugn-install-enable-disable-targz() {
 		plugn list | grep disabled | grep smoke-test-plugin"
 }
 
+T_plugn-install-enable-disable-targz-404() {
+	plugn-test-fail "test-install-targz-404" "
+		plugn init && \
+		plugn install https://github.com/dokku/smoke-test-plugin/archive/notfound.tar.gz smoke-test-plugin"
+}
+
 T_plugn-install-twice() {
   url="https://github.com/dokku/smoke-test-plugin"
   plugn-test-pass "test-install-twice" "

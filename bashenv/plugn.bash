@@ -7,7 +7,7 @@ version() {
 install() {
 	declare desc="Install a new plugin from a Git URL"
 	declare url="$1" name="$2"
-	local basefilename downloader args contents_dirs contents_files cwd
+	local basefilename downloader contents_dirs contents_files cwd
 
 	basefilename="${url##*/}"
   if [[ -z "$name" ]]; then
@@ -17,22 +17,23 @@ install() {
 
 	pushd "$PLUGIN_PATH/available" &>/dev/null
 	if [[ "$basefilename" == *.tar.gz ]] || [[ "$basefilename" == *.tgz ]]; then
-		which curl > /dev/null 2>&1 && downloader="curl" && args=(-sL)
-		which wget > /dev/null 2>&1 && downloader="wget" && args=(-q --max-redirect=1 -O-)
-
-		if [[ -z "$downloader" ]]; then
+    if [[ -n "$(type -p curl)" ]]; then
+      downloader=(curl -sfL)
+    elif [[ -n "$(type -p wget)" ]]; then
+      downloader=(wget -q --max-redirect=1 -O-)
+    else
 			echo "Please install either curl or wget to install via tar.gz" 1>&2
 			exit 1
 		fi
-		mkdir -p "$name" && \
-			"$downloader" "${args[@]}" "$url" | tar xz -C "$name" && \
-        pushd "$name" &>/dev/null
+		mkdir -p "$name"
+    command "${downloader[@]}" "$url" | tar xz -C "$name"
+    pushd "$name" &>/dev/null
 		# make sure we untarred a single dir into our target
 		mapfile -t contents_dirs < <(find . -maxdepth 1 -not -path '.' -type d)
 		mapfile -t contents_files < <(find . -maxdepth 1 -type f)
 		if [[ "${#contents_dirs[@]}" -eq 1 ]] && [[ "${#contents_files[@]}" -eq 0 ]]; then
-			pushd ./* &>/dev/null && \
-				find . -maxdepth 1 -not -path '.' -exec mv -f {} ../ \;
+			pushd ./* &>/dev/null
+      find . -maxdepth 1 -not -path '.' -exec mv -f {} ../ \;
 			cwd="$PWD"
 			popd &>/dev/null
 			rmdir "$cwd"
