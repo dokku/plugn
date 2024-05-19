@@ -59,6 +59,24 @@ T_plugn-install-enable-disable-targz() {
 		plugn list | grep disabled | grep smoke-test-plugin"
 }
 
+T_plugn-install-twice() {
+  url="https://github.com/dokku/smoke-test-plugin"
+  plugn-test-pass "test-install-twice" "
+    plugn init && \
+    plugn install '$url' smoke-test-plugin && \
+    plugn install '$url' smoke-test-plugin
+  "
+}
+
+T_plugin-install-twice-different() {
+  url="https://github.com/dokku/smoke-test-plugin"
+  plugn-test-fail "test-install-twice-different" "
+    plugn init && \
+    plugn install '$url' smoke-test-plugin && \
+    plugn install '$url-main' smoke-test-plugin
+  "
+}
+
 T_plugn-trigger() {
 	plugn-test-pass "test-trigger" "
 		plugn init && \

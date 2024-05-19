@@ -7,33 +7,50 @@ version() {
 install() {
 	declare desc="Install a new plugin from a Git URL"
 	declare url="$1" name="$2"
-	local basefilename downloader args contents cwd
-	basefilename="$(basename "$url")"
+	local basefilename downloader args contents_dirs contents_files cwd
+
+	basefilename="${url##*/}"
+  if [[ -z "$name" ]]; then
+    # set the default name from the url, which is the file stem.
+    name=${basefilename%%.*}
+  fi
+
 	pushd "$PLUGIN_PATH/available" &>/dev/null
 	if [[ "$basefilename" == *.tar.gz ]] || [[ "$basefilename" == *.tgz ]]; then
-		which curl > /dev/null 2>&1 && downloader="curl" && args="-sL"
-		which wget > /dev/null 2>&1 && downloader="wget" && args="-q --max-redirect=1 -O-"
+		which curl > /dev/null 2>&1 && downloader="curl" && args=(-sL)
+		which wget > /dev/null 2>&1 && downloader="wget" && args=(-q --max-redirect=1 -O-)
 
 		if [[ -z "$downloader" ]]; then
 			echo "Please install either curl or wget to install via tar.gz" 1>&2
 			exit 1
 		fi
-		mkdir -p "$2" && \
-			"$downloader" $args "$url" | tar xz -C "$2" && \
-			pushd "$2" &>/dev/null
+		mkdir -p "$name" && \
+			"$downloader" "${args[@]}" "$url" | tar xz -C "$name" && \
+        pushd "$name" &>/dev/null
 		# make sure we untarred a single dir into our target
-		contents_dirs=($(find . -maxdepth 1 -not -path '.' -type d))
-		contents_files=($(find . -maxdepth 1 -type f))
-		if [[ "${#contents_dirs[@]}" -eq 1 ]] && [[ "${#content_files[@]}" -eq 0 ]]; then
+		mapfile -t contents_dirs < <(find . -maxdepth 1 -not -path '.' -type d)
+		mapfile -t contents_files < <(find . -maxdepth 1 -type f)
+		if [[ "${#contents_dirs[@]}" -eq 1 ]] && [[ "${#contents_files[@]}" -eq 0 ]]; then
 			pushd ./* &>/dev/null && \
 				find . -maxdepth 1 -not -path '.' -exec mv -f {} ../ \;
 			cwd="$PWD"
 			popd &>/dev/null
 			rmdir "$cwd"
 		fi
-	else
-		git clone "$url" $2
-	fi
+	elif [[ -d "$name" ]]; then
+    # plugin is already installed
+    if [[ ! -d "$name/.git" ]]; then
+      echo "$name is already installed, but it does not seem to be a git repository">&2
+      exit 1
+    elif [[ "$url" != "$(git -C "$name" config remote.origin.url)" ]]; then
+      echo "Plugin '$name' is already installed, but with a different url. To install anyway, uninstall it first.">&2
+      exit 1
+    else
+      echo "Plugin '$name' is already installed.">&2
+    fi
+  else
+    git clone "$url" "$name"
+  fi
 	popd &> /dev/null
 }
 
