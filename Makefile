@@ -28,6 +28,8 @@ endef
 
 export PACKAGE_DESCRIPTION
 
+SOURCE_FILES = bashenv/* *.go go.mod go.sum
+
 LIST = build release release-packagecloud validate
 targets = $(addsuffix -in-docker, $(LIST))
 
@@ -61,19 +63,19 @@ $(targets): %-in-docker: .env.docker
 		--workdir /src/github.com/$(MAINTAINER)/$(REPOSITORY) \
 		$(IMAGE_NAME):build make -e $(@:-in-docker=)
 
-build/darwin/$(NAME):
+build/darwin/$(NAME): $(SOURCE_FILES)
 	mkdir -p build/darwin
 	CGO_ENABLED=0 GOOS=darwin go build -a -asmflags=-trimpath=/src -gcflags=-trimpath=/src \
 										-ldflags "-s -w -X main.Version=$(VERSION)" \
 										-o build/darwin/$(NAME)
 
-build/linux/$(NAME)-amd64:
+build/linux/$(NAME)-amd64: $(SOURCE_FILES)
 	mkdir -p build/linux
 	CGO_ENABLED=0 GOOS=linux go build -a -asmflags=-trimpath=/src -gcflags=-trimpath=/src \
 										-ldflags "-s -w -X main.Version=$(VERSION)" \
 										-o build/linux/$(NAME)-amd64
 
-build/linux/$(NAME)-arm64:
+build/linux/$(NAME)-arm64: $(SOURCE_FILES)
 	mkdir -p build/linux
 	CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -a -asmflags=-trimpath=/src -gcflags=-trimpath=/src \
 										-ldflags "-s -w -X main.Version=$(VERSION)" \
