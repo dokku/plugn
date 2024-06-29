@@ -82,6 +82,10 @@ func isArg(argument string) bool {
 	return len(os.Args) > 1 && os.Args[1] == argument
 }
 
+func isVersionArg() bool {
+	return isArg("version") || isArg("--version") || isArg("-v")
+}
+
 func main() {
 	os.Setenv("PLUGN_VERSION", Version)
 	if data, err := os.ReadFile(".plugn"); err == nil {
@@ -89,10 +93,14 @@ func main() {
 			os.Setenv("PLUGIN_PATH", path)
 		}
 	}
-	if !isArg("version") && os.Getenv("PLUGIN_PATH") == "" {
+	if !isVersionArg() && os.Getenv("PLUGIN_PATH") == "" {
 		fmt.Println("!! PLUGIN_PATH is not set in environment")
 		os.Exit(2)
 	}
+	if isVersionArg() {
+		os.Args[1] = "version"
+	}
+
 	PluginPath = os.Getenv("PLUGIN_PATH")
 	if isArg("gateway") {
 		runGateway()
