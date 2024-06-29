@@ -34,12 +34,13 @@ jobs:
         id: repo-name
         run: |
           echo "REPOSITORY_NAME=$(echo "${{ github.repository }}" | cut -d '/' -f 2)" >> $GITHUB_OUTPUT
+          echo "GO_VERSION=$(go mod edit -json | jq -r .Go)" >> $GITHUB_OUTPUT
 
       - name: Build binaries
         uses: crazy-max/ghaction-xgo@v3
         with:
           xgo_version: latest
-          go_version: 1.22
+          go_version: "${{ steps.repo-name.outputs.GO_VERSION }}"
           dest: dist
           prefix: ${{ steps.repo-name.outputs.REPOSITORY_NAME }}
           targets: darwin/amd64,darwin/arm64,linux/arm64,linux/amd64
