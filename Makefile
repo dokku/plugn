@@ -183,7 +183,6 @@ validate: test
 	sha1sum build/deb/$(NAME)_$(VERSION)_arm64.deb
 
 prebuild:
-	git config --global --add safe.directory $(shell pwd)
 	git status
 	cd / && go install github.com/progrium/basht/...@latest
 
