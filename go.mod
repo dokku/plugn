@@ -4,7 +4,7 @@ go 1.22
 toolchain go1.24.1
 
 require (
-	github.com/BurntSushi/toml v1.4.0
+	github.com/BurntSushi/toml v1.5.0
 	github.com/dokku/duplex v0.0.0-20160916172127-5bc6cb8042f7
 	github.com/progrium/go-basher v5.1.7+incompatible
 	github.com/progrium/plugin-demo v0.0.0-20160206152045-d94df2206a64
