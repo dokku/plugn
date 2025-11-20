@@ -1,6 +1,7 @@
 module plugn
 
-go 1.22
+go 1.24.0
+
 toolchain go1.24.1
 
 require (
@@ -16,5 +17,5 @@ require (
 	github.com/mitchellh/go-homedir v1.1.0 // indirect
 	github.com/pborman/uuid v1.2.1 // indirect
 	github.com/progrium/crypto v0.0.0-20141231035031-e04455474e32 // indirect
-	golang.org/x/crypto v0.35.0 // indirect
+	golang.org/x/crypto v0.45.0 // indirect
 )
