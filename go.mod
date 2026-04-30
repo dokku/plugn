@@ -6,7 +6,7 @@ toolchain go1.24.1
 
 require (
 	github.com/BurntSushi/toml v1.6.0
-	github.com/progrium/go-basher v5.1.8+incompatible
+	github.com/progrium/go-basher v6.0.1+incompatible
 )
 
 require (
