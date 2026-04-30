@@ -130,3 +130,15 @@ T_plugn-version() {
 		plugn init && \
 		plugn version"
 }
+
+T_plugn-gateway-removed() {
+	plugn-test-fail "test-gateway-removed" "
+		plugn init && \
+		plugn gateway"
+	plugn-test-fail "test-trigger-gateway-removed" "
+		plugn init && \
+		plugn trigger-gateway some-hook"
+	plugn-test-fail "test-reload-gateway-removed" "
+		plugn init && \
+		plugn reload-gateway"
+}

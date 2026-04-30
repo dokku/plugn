@@ -103,16 +103,10 @@ func main() {
 	}
 
 	PluginPath = os.Getenv("PLUGIN_PATH")
-	if isArg("gateway") {
-		runGateway()
-		return
-	}
 	funcs := map[string]func([]string){
-		"toml-get":        TomlGet,
-		"toml-set":        TomlSet,
-		"toml-export":     TomlExport,
-		"trigger-gateway": TriggerGateway,
-		"reload-gateway":  ReloadGateway,
+		"toml-get":    TomlGet,
+		"toml-set":    TomlSet,
+		"toml-export": TomlExport,
 	}
 	scripts := []string{
 		"bashenv/bash.bash",
