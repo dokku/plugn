@@ -26,6 +26,7 @@ install() {
 			exit 1
 		fi
 		mkdir -p "$name"
+		trap 'rm -rf "$PLUGIN_PATH/available/$name"' ERR INT TERM
     command "${downloader[@]}" "$url" | tar xz -C "$name"
     pushd "$name" &>/dev/null
 		# make sure we untarred a single dir into our target
@@ -38,6 +39,7 @@ install() {
 			popd &>/dev/null
 			rmdir "$cwd"
 		fi
+		trap - ERR INT TERM
 	elif [[ -d "$name" ]]; then
     # plugin is already installed
     if [[ ! -d "$name/.git" ]]; then

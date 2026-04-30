@@ -74,8 +74,9 @@ func TomlSet(args []string) {
 	t[args[1]][args[2]] = string(bytes)
 	f, err := os.Create(args[0])
 	assert(err)
+	defer f.Close()
 	assert(toml.NewEncoder(f).Encode(t))
-	f.Close()
+	assert(f.Sync())
 }
 
 func isArg(argument string) bool {
